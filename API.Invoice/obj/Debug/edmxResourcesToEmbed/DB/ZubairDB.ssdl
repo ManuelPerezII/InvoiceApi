@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ZubairModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="billingitem">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" />
+    <Property Name="cost" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="contractor">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="customer">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="invoice">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="customer_id" Type="int" />
+    <Property Name="invoice_status_id" Type="int" />
+    <Property Name="contractor_id" Type="int" />
+    <Property Name="creationdate" Type="datetime" />
+    <Property Name="isactive" Type="bit" />
+  </EntityType>
+  <EntityType Name="invoicefile">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="invoiceitem_id" Type="int" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" />
+    <Property Name="filelocation" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="invoiceitem">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="invoice_id" Type="int" />
+    <Property Name="billing_item_id" Type="int" />
+    <Property Name="discount" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="totalcost" Type="decimal" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="invoicelog">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="invoice_id" Type="int" />
+    <Property Name="invoicestatusid" Type="int" />
+    <Property Name="datecreated" Type="datetime" />
+  </EntityType>
+  <EntityType Name="invoicestatus">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_invoice_contractor">
+    <End Role="contractor" Type="Self.contractor" Multiplicity="0..1" />
+    <End Role="invoice" Type="Self.invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="contractor">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="invoice">
+        <PropertyRef Name="contractor_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_invoice_customer">
+    <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+    <End Role="invoice" Type="Self.invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="customer">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="invoice">
+        <PropertyRef Name="customer_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_invoice_invoicestatus">
+    <End Role="invoicestatus" Type="Self.invoicestatus" Multiplicity="0..1" />
+    <End Role="invoice" Type="Self.invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="invoicestatus">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="invoice">
+        <PropertyRef Name="invoice_status_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_invoicefile_invoiceitem">
+    <End Role="invoiceitem" Type="Self.invoiceitem" Multiplicity="0..1" />
+    <End Role="invoicefile" Type="Self.invoicefile" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="invoiceitem">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="invoicefile">
+        <PropertyRef Name="invoiceitem_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_invoiceitem_billingitem">
+    <End Role="billingitem" Type="Self.billingitem" Multiplicity="0..1" />
+    <End Role="invoiceitem" Type="Self.invoiceitem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="billingitem">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="invoiceitem">
+        <PropertyRef Name="billing_item_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_invoiceitem_invoice">
+    <End Role="invoice" Type="Self.invoice" Multiplicity="0..1" />
+    <End Role="invoiceitem" Type="Self.invoiceitem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="invoice">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="invoiceitem">
+        <PropertyRef Name="invoice_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_invoicelog_invoice">
+    <End Role="invoice" Type="Self.invoice" Multiplicity="0..1" />
+    <End Role="invoicelog" Type="Self.invoicelog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="invoice">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="invoicelog">
+        <PropertyRef Name="invoice_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_invoicelog_invoicestatus">
+    <End Role="invoicestatus" Type="Self.invoicestatus" Multiplicity="0..1" />
+    <End Role="invoicelog" Type="Self.invoicelog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="invoicestatus">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="invoicelog">
+        <PropertyRef Name="invoicestatusid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ZubairModelStoreContainer">
+    <EntitySet Name="billingitem" EntityType="Self.billingitem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="contractor" EntityType="Self.contractor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="customer" EntityType="Self.customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="invoice" EntityType="Self.invoice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="invoicefile" EntityType="Self.invoicefile" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="invoiceitem" EntityType="Self.invoiceitem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="invoicelog" EntityType="Self.invoicelog" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="invoicestatus" EntityType="Self.invoicestatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_invoice_contractor" Association="Self.FK_invoice_contractor">
+      <End Role="contractor" EntitySet="contractor" />
+      <End Role="invoice" EntitySet="invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_invoice_customer" Association="Self.FK_invoice_customer">
+      <End Role="customer" EntitySet="customer" />
+      <End Role="invoice" EntitySet="invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_invoice_invoicestatus" Association="Self.FK_invoice_invoicestatus">
+      <End Role="invoicestatus" EntitySet="invoicestatus" />
+      <End Role="invoice" EntitySet="invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_invoicefile_invoiceitem" Association="Self.FK_invoicefile_invoiceitem">
+      <End Role="invoiceitem" EntitySet="invoiceitem" />
+      <End Role="invoicefile" EntitySet="invoicefile" />
+    </AssociationSet>
+    <AssociationSet Name="FK_invoiceitem_billingitem" Association="Self.FK_invoiceitem_billingitem">
+      <End Role="billingitem" EntitySet="billingitem" />
+      <End Role="invoiceitem" EntitySet="invoiceitem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_invoiceitem_invoice" Association="Self.FK_invoiceitem_invoice">
+      <End Role="invoice" EntitySet="invoice" />
+      <End Role="invoiceitem" EntitySet="invoiceitem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_invoicelog_invoice" Association="Self.FK_invoicelog_invoice">
+      <End Role="invoice" EntitySet="invoice" />
+      <End Role="invoicelog" EntitySet="invoicelog" />
+    </AssociationSet>
+    <AssociationSet Name="FK_invoicelog_invoicestatus" Association="Self.FK_invoicelog_invoicestatus">
+      <End Role="invoicestatus" EntitySet="invoicestatus" />
+      <End Role="invoicelog" EntitySet="invoicelog" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
