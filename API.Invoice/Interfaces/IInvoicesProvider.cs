@@ -8,7 +8,7 @@ namespace API.Invoice.Interfaces
 {
     public interface IInvoicesProvider
     {
-        Task<(bool IsSuccess, IEnumerable<Models.Invoice> Invoices, string ErrorMessage)> GetInvoicesAsync();
+        Task<(bool IsSuccess, IEnumerable<Models.InvoiceDetailList> Invoices, string ErrorMessage)> GetInvoicesAsync();
         Task<(bool IsSuccess, string ErrorMessage)> CreateInvoice();
 
         Task<(bool IsSuccess, string ErrorMessage)> UpdateInvoice();

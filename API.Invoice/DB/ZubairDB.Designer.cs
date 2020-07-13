@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\U012MXP\source\repos\AppTwo\API.Invoice\DB\ZubairDB.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\DB\ZubairDB.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

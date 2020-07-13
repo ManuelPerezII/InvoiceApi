@@ -5,7 +5,7 @@ using System.Web;
 
 namespace API.Invoice.Models
 {
-    public class BillingItem
+    public sealed class BillingItem
     {
         public int Id { get; set; }
 

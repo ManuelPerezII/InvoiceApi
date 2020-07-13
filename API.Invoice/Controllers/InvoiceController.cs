@@ -21,36 +21,36 @@ namespace API.Invoice.Controllers
     public class InvoiceController : ApiController
     {
         private  IInvoicesProvider invoicesProvider;
-        private  ZubairEntities dbContext;
-        
-        
-
+        //private  ZubairEntities dbContext;
+                
         public InvoiceController()
-        {
-            this.dbContext = new ZubairEntities();
+        {            
         }
 
-        public InvoiceController(IInvoicesProvider invoicesProvider)
-        {
-          //  this.invoicesProvider = invoicesProvider;
-        }
+        //public InvoiceController(IInvoicesProvider invoicesProvider)
+        //{
+        //  //  this.invoicesProvider = invoicesProvider;
+        //}
 
         [HttpGet]
         public async Task<IHttpActionResult> GetInvoicesAsync()
         {
-            
+               
             var config = new MapperConfiguration(cfg => {
                 cfg.CreateMap <invoice, Models.Invoice > ();
             });
             IMapper mapper = config.CreateMapper();
-            invoicesProvider = new InvoicesProvider(this.dbContext,null, mapper);
-            var result = await invoicesProvider.GetInvoicesAsync();
-            if (result.IsSuccess)
-            {
-                return Ok(result.Invoices);
-            }
-            return NotFound();
 
+            using (ZubairEntities dbContext = new ZubairEntities())
+            {
+                invoicesProvider = new InvoicesProvider(dbContext, null, mapper);
+                var result = await invoicesProvider.GetInvoicesAsync();
+                if (result.IsSuccess)
+                {
+                    return Ok(result.Invoices);
+                }
+                return NotFound();
+            }            
         }
 
         //[HttpGet]

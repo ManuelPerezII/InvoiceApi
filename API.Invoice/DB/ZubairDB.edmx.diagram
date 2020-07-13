@@ -6,7 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="42d54eaf21bf46bf9d4d783066c21653" Name="Diagram1">
         <EntityTypeShape EntityType="ZubairModel.billingitem" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ZubairModel.contractor" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZubairModel.contractor" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ZubairModel.customer" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
         <EntityTypeShape EntityType="ZubairModel.invoice" Width="1.5" PointX="3" PointY="3.125" IsExpanded="true" />
         <EntityTypeShape EntityType="ZubairModel.invoicefile" Width="1.5" PointX="7.5" PointY="6.75" IsExpanded="true" />
