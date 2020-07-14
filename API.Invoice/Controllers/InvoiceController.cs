@@ -52,12 +52,7 @@ namespace API.Invoice.Controllers
                 return NotFound();
             }            
         }
-
-        //[HttpGet]
-        //public IHttpActionResult Get()
-        //{
-        //    return Ok("Get");
-        //}
+        
 
         [HttpPost]
         public IHttpActionResult Post()

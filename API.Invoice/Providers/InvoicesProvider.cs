@@ -8,6 +8,8 @@ using System.Web;
 using API.Invoice.DB;
 using AutoMapper;
 using System.Data.Entity;
+using Newtonsoft.Json;
+using System.Configuration;
 
 namespace API.Invoice.Providers
 {
@@ -33,33 +35,46 @@ namespace API.Invoice.Providers
             throw new NotImplementedException();
         }
 
-        public async Task<(bool IsSuccess, IEnumerable<Models.InvoiceDetailList> Invoices, string ErrorMessage)> GetInvoicesAsync()
+        public async Task<(bool IsSuccess, IEnumerable<Models.InvoiceViewModel> Invoices, string ErrorMessage)> GetInvoicesAsync()
         {
             try
-            {
-                var invoices = await dbContext.invoices.Include("contractor").Include("customer")
-                               .Include("invoiceitems").ToListAsync(); //.Include("invoiceitems.billingitem")
+            {                
+                var invoices = await dbContext.invoices.Include("contractor").Include("customer").Include("invoicestatu")
+                               .Include("invoiceitems").Include("invoiceitems.billingitem").ToListAsync();
+
                 if (invoices != null && invoices.Any())
                 {
                     var config = new MapperConfiguration(cfg => {
-                        cfg.CreateMap<invoice, Models.InvoiceDetailList>()
-                        .ForMember(inv => inv.InvoiceItems, map => map.MapFrom(c => c.invoiceitems))
-                        //.ForMember(inv => inv.Customer, map => map.MapFrom(c => c.customer))
-                        //.ForMember(inv => inv.InvoiceItems, map => map.MapFrom(c => c.invoiceitems))
-                        .ReverseMap();
+                        
+
+                        cfg.CreateMap<invoice, Models.InvoiceViewModel>()
+                        .ForMember(inv=>inv.InvoiceStatusId,map=> map.MapFrom(c=> c.invoice_status_id))
+                        .ForMember(inv => inv.CustomerId, map => map.MapFrom(c => c.customer_id))
+                        .ForMember(inv => inv.ContractorId, map => map.MapFrom(c => c.contractor_id))
+                        .ForMember(inv => inv.InvoiceItems, map => map.MapFrom(c => c.invoiceitems)).ReverseMap();                        
                         cfg.CreateMap<contractor, Models.Contractor>();
                         cfg.CreateMap<customer, Models.Customer>();
-                        cfg.CreateMap<invoiceitem, Models.InvoiceItem>();
-                        //.ForMember(inv => inv.InvoiceItem., map => map.MapFrom(c => c.customer));//
+                        cfg.CreateMap<invoicestatu, Models.InvoiceStatus>();
+                        //cfg.CreateMap<billingitem, Models.BillingItem>();
+                        cfg.CreateMap<invoiceitem, Models.InvoiceItemViewModel>()
+                        .ForMember(x => x.BillingItem, map => map.MapFrom(x => x.billingitem)).ReverseMap();
+                        //.ForMember(x => x.BillingItem, o => o.Ignore());
+                        cfg.CreateMap<billingitem, Models.BillingItem>();
+                        //.ForMember(x => x.BillingItem, map => map.MapFrom(x => x.billingitem)).ReverseMap();
+                        //cfg.CreateMap<billingitem, Models.BillingItem>();
+                        //.ForAllMembers(o=> o.Ignore());
+                        //cfg.CreateMap<billingitem, Models.BillingItem>();
+                        //cfg.CreateMap<billingitem, Models.InvoiceItemViewModel>()
+                        //.ForMember(x=> x.BillingItem,map=>map.MapFrom(x=>x));                        
 
                     });
-                    
-                    
+                        
+                    config.AssertConfigurationIsValid();
                     IMapper mapper = config.CreateMapper();
-
-                    var result = mapper.Map<IEnumerable<Models.InvoiceDetailList>>(invoices);
-                    //var result = mapper.Map<IEnumerable<DB.invoice>, IEnumerable<Models.Invoice>>(invoices);
-
+                    
+                    //var result = mapper.Map<IEnumerable<Models.InvoiceViewModel>>(invoices);
+                    var result = mapper.Map< IEnumerable<invoice>, IEnumerable<Models.InvoiceViewModel>>(invoices);
+                    
                     return (true, result, null);
                 }
                 return (false, null, "Not Found");

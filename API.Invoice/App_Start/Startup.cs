@@ -30,7 +30,7 @@ namespace API.Invoice.App_Start
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IInvoicesProvider, InvoicesProvider>();
-            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(typeof(Startup));            
             
             
             //services.AddControllers();

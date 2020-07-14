@@ -6,7 +6,7 @@ using System.Web;
 
 namespace API.Invoice.Models
 {
-    public class InvoiceDetailList
+    public class InvoiceViewModel
     {
         [Key]
         public int Id { get; set; }
@@ -25,7 +25,10 @@ namespace API.Invoice.Models
 
         public Contractor contractor { get; set; }
 
-        public List<InvoiceItem> InvoiceItems { get; set; }
+        public InvoiceStatus invoiceStatu { get; set; }
+
+        public List<InvoiceItemViewModel> InvoiceItems { get;set;}
+        //public List<InvoiceItem> InvoiceItems { get; set; }
     }
 }
 

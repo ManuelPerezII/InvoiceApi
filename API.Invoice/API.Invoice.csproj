@@ -352,7 +352,8 @@
     <Compile Include="Models\Contractor.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Invoice.cs" />
-    <Compile Include="Models\InvoiceDetailList.cs" />
+    <Compile Include="Models\InvoiceItemViewModel.cs" />
+    <Compile Include="Models\InvoiceViewModel.cs" />
     <Compile Include="Models\InvoiceFile.cs" />
     <Compile Include="Models\InvoiceItem.cs" />
     <Compile Include="Models\InvoiceLog.cs" />
