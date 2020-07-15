@@ -30,9 +30,26 @@ namespace API.Invoice.Providers
             throw new NotImplementedException();
         }
 
-        public Task<(bool IsSuccess, string ErrorMessage)> DeleteInvoice(int InvoiceID)
+        public async Task<(bool IsSuccess, string ErrorMessage)> DeleteInvoice(int InvoiceID)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var invoice = await dbContext.invoices.Where(c=> c.id == InvoiceID).FirstOrDefaultAsync();
+                             
+                if (invoice != null)
+                {                    
+                    invoice.isactive = false;
+                    await dbContext.SaveChangesAsync();
+
+                    return (true, null);
+                }
+                return (false, "Not Found");
+            }
+            catch (Exception ex)
+            {
+                logger?.LogError(ex.ToString());
+                return (false, ex.Message);
+            }
         }
 
         public async Task<(bool IsSuccess, IEnumerable<Models.InvoiceViewModel> Invoices, string ErrorMessage)> GetInvoicesAsync()
