@@ -43,7 +43,7 @@ namespace API.Invoice.Controllers
 
             using (ZubairEntities dbContext = new ZubairEntities())
             {
-                invoicesProvider = new InvoicesProvider(dbContext, null, mapper);
+                invoicesProvider = new InvoicesProvider(dbContext, null, CreateMapper());
                 var result = await invoicesProvider.GetInvoicesAsync();
                 if (result.IsSuccess)
                 {
@@ -51,6 +51,31 @@ namespace API.Invoice.Controllers
                 }
                 return NotFound();
             }            
+        }
+
+        private IMapper CreateMapper()
+        {
+            var config = new MapperConfiguration(cfg => {
+
+
+                cfg.CreateMap<invoice, Models.InvoiceViewModel>()
+                .ForMember(inv => inv.InvoiceStatusId, map => map.MapFrom(c => c.invoice_status_id))
+                .ForMember(inv => inv.CustomerId, map => map.MapFrom(c => c.customer_id))
+                .ForMember(inv => inv.ContractorId, map => map.MapFrom(c => c.contractor_id))
+                .ForMember(inv => inv.InvoiceItems, map => map.MapFrom(c => c.invoiceitems)).ReverseMap();
+                cfg.CreateMap<contractor, Models.Contractor>();
+                cfg.CreateMap<customer, Models.Customer>();
+                cfg.CreateMap<invoicestatu, Models.InvoiceStatus>();
+                cfg.CreateMap<invoiceitem, Models.InvoiceItemViewModel>()
+                .ForMember(x => x.BillingItem, map => map.MapFrom(x => x.billingitem)).ReverseMap();
+                cfg.CreateMap<billingitem, Models.BillingItem>();
+
+            });
+
+            config.AssertConfigurationIsValid();
+            IMapper mapper = config.CreateMapper();
+
+            return mapper;
         }
         
 
