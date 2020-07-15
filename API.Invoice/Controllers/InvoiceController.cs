@@ -1,6 +1,7 @@
 ﻿
 using API.Invoice.DB;
 using API.Invoice.Interfaces;
+using API.Invoice.Profile;
 using API.Invoice.Providers;
 using AutoMapper;
 using Microsoft.Ajax.Utilities;
@@ -34,13 +35,7 @@ namespace API.Invoice.Controllers
 
         [HttpGet]
         public async Task<IHttpActionResult> GetInvoicesAsync()
-        {
-               
-            var config = new MapperConfiguration(cfg => {
-                cfg.CreateMap <invoice, Models.Invoice > ();
-            });
-            IMapper mapper = config.CreateMapper();
-
+        {         
             using (ZubairEntities dbContext = new ZubairEntities())
             {
                 invoicesProvider = new InvoicesProvider(dbContext, null, CreateMapper());
@@ -56,20 +51,18 @@ namespace API.Invoice.Controllers
         private IMapper CreateMapper()
         {
             var config = new MapperConfiguration(cfg => {
-
-
-                cfg.CreateMap<invoice, Models.InvoiceViewModel>()
-                .ForMember(inv => inv.InvoiceStatusId, map => map.MapFrom(c => c.invoice_status_id))
-                .ForMember(inv => inv.CustomerId, map => map.MapFrom(c => c.customer_id))
-                .ForMember(inv => inv.ContractorId, map => map.MapFrom(c => c.contractor_id))
-                .ForMember(inv => inv.InvoiceItems, map => map.MapFrom(c => c.invoiceitems)).ReverseMap();
-                cfg.CreateMap<contractor, Models.Contractor>();
-                cfg.CreateMap<customer, Models.Customer>();
-                cfg.CreateMap<invoicestatu, Models.InvoiceStatus>();
-                cfg.CreateMap<invoiceitem, Models.InvoiceItemViewModel>()
-                .ForMember(x => x.BillingItem, map => map.MapFrom(x => x.billingitem)).ReverseMap();
-                cfg.CreateMap<billingitem, Models.BillingItem>();
-
+                cfg.AddProfile<InvoiceProfile>();
+                //cfg.CreateMap<invoice, Models.InvoiceViewModel>()
+                //.ForMember(inv => inv.InvoiceStatusId, map => map.MapFrom(c => c.invoice_status_id))
+                //.ForMember(inv => inv.CustomerId, map => map.MapFrom(c => c.customer_id))
+                //.ForMember(inv => inv.ContractorId, map => map.MapFrom(c => c.contractor_id))
+                //.ForMember(inv => inv.InvoiceItems, map => map.MapFrom(c => c.invoiceitems)).ReverseMap();
+                //cfg.CreateMap<contractor, Models.Contractor>();
+                //cfg.CreateMap<customer, Models.Customer>();
+                //cfg.CreateMap<invoicestatu, Models.InvoiceStatus>();
+                //cfg.CreateMap<invoiceitem, Models.InvoiceItemViewModel>()
+                //.ForMember(x => x.BillingItem, map => map.MapFrom(x => x.billingitem)).ReverseMap();
+                //cfg.CreateMap<billingitem, Models.BillingItem>();
             });
 
             config.AssertConfigurationIsValid();
