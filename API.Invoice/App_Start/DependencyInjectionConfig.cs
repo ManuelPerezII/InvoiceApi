@@ -1,4 +1,6 @@
 ﻿using API.Invoice.DB;
+using API.Invoice.Profile;
+using AutoMapper;
 using SimpleInjector;
 using SimpleInjector.Integration.Web;
 using SimpleInjector.Lifestyles;
@@ -19,14 +21,12 @@ namespace API.Invoice.App_Start
 
             _container.Options.DefaultScopedLifestyle = Lifestyle.CreateHybrid(() => HttpContext.Current == null,
                 new ThreadScopedLifestyle(), new WebRequestLifestyle());
-
-            //_container.Register<DbContext>(() => {
-            //    return new ZubairEntities();
-            //});
-            //_container.Register<IDbContext>(() => app.GetRequiredRequestService<DbContext>(), Lifestyle.Scoped);
-            //Repository.DependencyInjectionStrapper.AddRegistrationsToContainer(_container);
-
+            
             Providers.DependencyInjectionStrapper.AddRegistrationsToContainer(_container);
+            //var config = AutomapperConfig.RegisterMappings();
+
+            //_container.RegisterInstance<MapperConfiguration>(config);
+            //_container.Register<IMapper>(() => config.CreateMapper(_container.GetInstance));
 
             // Web API controllers
             _container.RegisterWebApiControllers(GlobalConfiguration.Configuration);
@@ -34,7 +34,7 @@ namespace API.Invoice.App_Start
 
             return _container;
         }
-
+        
         public static T Get<T>() where T : class
         {
             return _container.GetInstance<T>();

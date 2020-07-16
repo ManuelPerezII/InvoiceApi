@@ -19,7 +19,13 @@ namespace API.Invoice.DB
             : base("name=ZubairEntities")
         {
         }
-    
+
+        public ZubairEntities(string connectionString)
+            : base("name=ZubairEntities")
+        {
+            this.Database.Connection.ConnectionString = connectionString;
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();

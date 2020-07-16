@@ -16,8 +16,7 @@ using API.Invoice.Profile;
 namespace API.Invoice.Providers
 {
     public class InvoicesProvider : IInvoicesProvider
-    {
-        private readonly ZubairEntities dbContext;
+    {        
         private readonly IMapper mapper;
         private readonly ILogger<InvoicesProvider> logger;
 
@@ -27,10 +26,15 @@ namespace API.Invoice.Providers
         //    this.logger = logger;
         //    this.mapper = mapper;
         //}
+        //public InvoicesProvider(IMapper mapper)
+        //{
+        //    //this.logger = logger;
+        //    this.mapper = mapper;
+        //    this.dbContext = new ZubairEntities();
+        //}
         public InvoicesProvider()
         {
-            this.mapper = CreateMapper();
-            this.dbContext = new ZubairEntities();
+            this.mapper = CreateMapper();     
         }
 
         private IMapper CreateMapper()
@@ -39,7 +43,7 @@ namespace API.Invoice.Providers
                 cfg.AddProfile<InvoiceProfile>();
             });
 
-            config.AssertConfigurationIsValid();
+            //config.AssertConfigurationIsValid();
             IMapper mapper = config.CreateMapper();
 
             return mapper;
@@ -48,8 +52,8 @@ namespace API.Invoice.Providers
         public async Task<(bool IsSuccess, IEnumerable<Models.InvoiceViewModel> Invoices, string ErrorMessage)> GetInvoicesAsync()
         {
             try
-            {
-                var invoices = await dbContext.invoices.Include("contractor").Include("customer").Include("invoicestatu")
+            {                
+                var invoices = await Connection.Instance.DbContext.invoices.Include("contractor").Include("customer").Include("invoicestatu")
                                .Include("invoiceitems").Include("invoiceitems.billingitem").ToListAsync();
 
                 if (invoices != null && invoices.Any())
@@ -58,6 +62,7 @@ namespace API.Invoice.Providers
 
                     return (true, result, null);
                 }
+
                 return (false, null, "Not Found");
             }
             catch (Exception ex)
@@ -79,8 +84,8 @@ namespace API.Invoice.Providers
                     tempInvoice.creationdate = DateTime.Now;
                     tempInvoice.invoice_status_id = invoice.InvoiceStatusId;
                     tempInvoice.isactive = invoice.IsActive;
-                    dbContext.invoices.Add(tempInvoice);
-                    await dbContext.SaveChangesAsync();
+                    Connection.Instance.DbContext.invoices.Add(tempInvoice);
+                    await Connection.Instance.DbContext.SaveChangesAsync();
 
                     return (true, null);
                 }
@@ -97,7 +102,7 @@ namespace API.Invoice.Providers
         {
             try
             {
-                var tempInvoice = await dbContext.invoices.Where(c => c.id == invoice.Id).FirstOrDefaultAsync();
+                var tempInvoice = await Connection.Instance.DbContext.invoices.Where(c => c.id == invoice.Id).FirstOrDefaultAsync();
 
                 if (tempInvoice != null)
                 {
@@ -105,7 +110,7 @@ namespace API.Invoice.Providers
                     tempInvoice.customer_id = invoice.CustomerId;                    
                     tempInvoice.invoice_status_id = invoice.InvoiceStatusId;
                     tempInvoice.isactive = invoice.IsActive;
-                    await dbContext.SaveChangesAsync();
+                    await Connection.Instance.DbContext.SaveChangesAsync();
 
                     return (true, null);
                 }
@@ -122,12 +127,12 @@ namespace API.Invoice.Providers
         {
             try
             {
-                var invoice = await dbContext.invoices.Where(c=> c.id == InvoiceID).FirstOrDefaultAsync();
+                var invoice = await Connection.Instance.DbContext.invoices.Where(c=> c.id == InvoiceID).FirstOrDefaultAsync();
                              
                 if (invoice != null)
                 {                    
                     invoice.isactive = false;
-                    await dbContext.SaveChangesAsync();
+                    await Connection.Instance.DbContext.SaveChangesAsync();
 
                     return (true, null);
                 }

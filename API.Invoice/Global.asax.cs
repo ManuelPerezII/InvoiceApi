@@ -21,12 +21,12 @@ namespace API.Invoice
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
             
             var container = App_Start.DependencyInjectionConfig.CreateContainer();
             container.Verify(SimpleInjector.VerificationOption.VerifyAndDiagnose);
             DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(container));
             SimpleInjectorServiceHostFactory.SetContainer(container);
+
 
             GlobalConfiguration.Configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);            
         }
