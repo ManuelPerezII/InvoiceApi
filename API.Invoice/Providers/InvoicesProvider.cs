@@ -26,7 +26,6 @@ namespace API.Invoice.Providers
             this.mapper = mapper;
         }
 
-
         public async Task<(bool IsSuccess, IEnumerable<Models.InvoiceViewModel> Invoices, string ErrorMessage)> GetInvoicesAsync()
         {
             try
@@ -75,7 +74,6 @@ namespace API.Invoice.Providers
             }
         }
 
-
         public async Task<(bool IsSuccess, string ErrorMessage)> UpdateInvoice(Models.Invoice invoice)
         {
             try
@@ -122,7 +120,5 @@ namespace API.Invoice.Providers
                 return (false, ex.Message);
             }
         }
-
-
     }
 }

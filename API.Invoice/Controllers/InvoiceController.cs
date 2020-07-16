@@ -13,13 +13,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-
+using System.Web.SessionState;
 
 namespace API.Invoice.Controllers
 {
     
     [RoutePrefix("api/invoice")]
-    public class InvoiceController : ApiController
+    public class InvoiceController : ApiController,IRequiresSessionState
     {
         private  IInvoicesProvider invoicesProvider;     
                 
@@ -27,10 +27,10 @@ namespace API.Invoice.Controllers
         {            
         }
 
-        //public InvoiceController(IInvoicesProvider invoicesProvider)
-        //{
-        //  //  this.invoicesProvider = invoicesProvider;
-        //}
+        public InvoiceController(IInvoicesProvider invoicesProvider)
+        {
+            this.invoicesProvider = invoicesProvider;
+        }
 
         [HttpGet]
         public async Task<IHttpActionResult> GetInvoicesAsync()
@@ -41,7 +41,7 @@ namespace API.Invoice.Controllers
                 var result = await invoicesProvider.GetInvoicesAsync();
                 if (result.IsSuccess)
                 {
-                    return Ok(result.Invoices);
+                    return Json(result.Invoices);
                 }
                 return NotFound();
             }            
