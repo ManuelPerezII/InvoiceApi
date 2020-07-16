@@ -52,15 +52,18 @@ namespace API.Invoice.Providers
         public async Task<(bool IsSuccess, IEnumerable<Models.InvoiceViewModel> Invoices, string ErrorMessage)> GetInvoicesAsync()
         {
             try
-            {                
-                var invoices = await Connection.Instance.DbContext.invoices.Include("contractor").Include("customer").Include("invoicestatu")
+            {
+                using (ZubairEntities dbContext = new ZubairEntities())
+                {
+                    var invoices = await dbContext.invoices.Include("contractor").Include("customer").Include("invoicestatu")
                                .Include("invoiceitems").Include("invoiceitems.billingitem").ToListAsync();
 
-                if (invoices != null && invoices.Any())
-                {
-                    var result = mapper.Map<IEnumerable<invoice>, IEnumerable<Models.InvoiceViewModel>>(invoices);
+                    if (invoices != null && invoices.Any())
+                    {
+                        var result = mapper.Map<IEnumerable<invoice>, IEnumerable<Models.InvoiceViewModel>>(invoices);
 
-                    return (true, result, null);
+                        return (true, result, null);
+                    }
                 }
 
                 return (false, null, "Not Found");
@@ -75,19 +78,22 @@ namespace API.Invoice.Providers
         public async Task<(bool IsSuccess, string ErrorMessage)> CreateInvoice(Models.Invoice invoice)
         {
             try
-            {                
-                if (invoice != null)
+            {
+                using (ZubairEntities dbContext = new ZubairEntities())
                 {
-                    var tempInvoice = new invoice();
-                    tempInvoice.contractor_id = invoice.ContractorId;
-                    tempInvoice.customer_id = invoice.CustomerId;
-                    tempInvoice.creationdate = DateTime.Now;
-                    tempInvoice.invoice_status_id = invoice.InvoiceStatusId;
-                    tempInvoice.isactive = invoice.IsActive;
-                    Connection.Instance.DbContext.invoices.Add(tempInvoice);
-                    await Connection.Instance.DbContext.SaveChangesAsync();
+                    if (invoice != null)
+                    {
+                        var tempInvoice = new invoice();
+                        tempInvoice.contractor_id = invoice.ContractorId;
+                        tempInvoice.customer_id = invoice.CustomerId;
+                        tempInvoice.creationdate = DateTime.Now;
+                        tempInvoice.invoice_status_id = invoice.InvoiceStatusId;
+                        tempInvoice.isactive = invoice.IsActive;
+                        dbContext.invoices.Add(tempInvoice);
+                        await dbContext.SaveChangesAsync();
 
-                    return (true, null);
+                        return (true, null);
+                    }
                 }
                 return (false, "Not Found");
             }
@@ -102,17 +108,20 @@ namespace API.Invoice.Providers
         {
             try
             {
-                var tempInvoice = await Connection.Instance.DbContext.invoices.Where(c => c.id == invoice.Id).FirstOrDefaultAsync();
-
-                if (tempInvoice != null)
+                using (ZubairEntities dbContext = new ZubairEntities())
                 {
-                    tempInvoice.contractor_id = invoice.ContractorId;
-                    tempInvoice.customer_id = invoice.CustomerId;                    
-                    tempInvoice.invoice_status_id = invoice.InvoiceStatusId;
-                    tempInvoice.isactive = invoice.IsActive;
-                    await Connection.Instance.DbContext.SaveChangesAsync();
+                    var tempInvoice = await dbContext.invoices.Where(c => c.id == invoice.Id).FirstOrDefaultAsync();
 
-                    return (true, null);
+                    if (tempInvoice != null)
+                    {
+                        tempInvoice.contractor_id = invoice.ContractorId;
+                        tempInvoice.customer_id = invoice.CustomerId;
+                        tempInvoice.invoice_status_id = invoice.InvoiceStatusId;
+                        tempInvoice.isactive = invoice.IsActive;
+                        await dbContext.SaveChangesAsync();
+
+                        return (true, null);
+                    }
                 }
                 return (false, "Not Found");
             }
@@ -127,15 +136,19 @@ namespace API.Invoice.Providers
         {
             try
             {
-                var invoice = await Connection.Instance.DbContext.invoices.Where(c=> c.id == InvoiceID).FirstOrDefaultAsync();
-                             
-                if (invoice != null)
-                {                    
-                    invoice.isactive = false;
-                    await Connection.Instance.DbContext.SaveChangesAsync();
+                using(ZubairEntities dbContext = new ZubairEntities())
+                {
+                    var invoice = await dbContext.invoices.Where(c => c.id == InvoiceID).FirstOrDefaultAsync();
 
-                    return (true, null);
+                    if (invoice != null)
+                    {
+                        invoice.isactive = false;
+                        await dbContext.SaveChangesAsync();
+
+                        return (true, null);
+                    }
                 }
+                
                 return (false, "Not Found");
             }
             catch (Exception ex)
