@@ -10,6 +10,7 @@ using AutoMapper;
 using System.Data.Entity;
 using Newtonsoft.Json;
 using System.Configuration;
+using Microsoft.AspNetCore.Routing.Template;
 
 namespace API.Invoice.Providers
 {
@@ -25,9 +26,29 @@ namespace API.Invoice.Providers
             this.mapper = mapper;
         }
 
-        public Task<(bool IsSuccess, string ErrorMessage)> CreateInvoice()
+        public async Task<(bool IsSuccess, string ErrorMessage)> CreateInvoice(Models.Invoice invoice)
         {
-            throw new NotImplementedException();
+            try
+            {                
+                if (invoice != null)
+                {
+                    var tempInvoice = new invoice();
+                    tempInvoice.contractor_id = invoice.ContractorId;
+                    tempInvoice.customer_id = invoice.CustomerId;
+                    tempInvoice.creationdate = DateTime.Now;
+                    tempInvoice.invoice_status_id = invoice.InvoiceStatusId;
+                    dbContext.invoices.Add(tempInvoice);
+                    await dbContext.SaveChangesAsync();
+
+                    return (true, null);
+                }
+                return (false, "Not Found");
+            }
+            catch (Exception ex)
+            {
+                logger?.LogError(ex.ToString());
+                return (false, ex.Message);
+            }
         }
 
         public async Task<(bool IsSuccess, string ErrorMessage)> DeleteInvoice(int InvoiceID)

@@ -21,8 +21,7 @@ namespace API.Invoice.Controllers
     [RoutePrefix("api/invoice")]
     public class InvoiceController : ApiController
     {
-        private  IInvoicesProvider invoicesProvider;
-        //private  ZubairEntities dbContext;
+        private  IInvoicesProvider invoicesProvider;     
                 
         public InvoiceController()
         {            
@@ -59,24 +58,22 @@ namespace API.Invoice.Controllers
 
             return mapper;
         }
-        
 
         [HttpPost]
-        public IHttpActionResult Post()
+        public async Task<IHttpActionResult> CreateInvoice(Models.Invoice invoice)
         {
-            return Ok("Post");
+            using (ZubairEntities dbContext = new ZubairEntities())
+            {
+                invoicesProvider = new InvoicesProvider(dbContext, null, null);
+                var result = await invoicesProvider.CreateInvoice(invoice);
+                if (result.IsSuccess)
+                {
+                    return Ok();
+                }
+                return NotFound();
+            }
         }
-
-        //public IHttpActionResult Put()
-        //{            
-        //    return Ok("Put");
-        //}
-
-        public IHttpActionResult Patch()
-        {
-            return Ok("Patch");
-        }
-        
+                
         [HttpDelete]
         public async Task<IHttpActionResult> DeleteInvoice(int invoiceId)
         {
@@ -91,5 +88,24 @@ namespace API.Invoice.Controllers
                 return NotFound();
             }
         }
+
+        #region Commented
+        //[HttpPost]
+        //public IHttpActionResult Post()
+        //{
+        //    return Ok("Post");
+        //}
+
+        //public IHttpActionResult Put()
+        //{            
+        //    return Ok("Put");
+        //}
+
+        //[HttpPatch]
+        //public IHttpActionResult Patch()
+        //{
+        //    return Ok("Patch");
+        //}
+        #endregion
     }
 }

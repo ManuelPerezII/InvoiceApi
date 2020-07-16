@@ -19,7 +19,7 @@ namespace API.Invoice.Profile
             CreateMap<customer, Models.Customer>();
             CreateMap<invoicestatu, Models.InvoiceStatus>();
             CreateMap<invoiceitem, Models.InvoiceItemViewModel>()
-            .ForMember(x => x.BillingItem, map => map.MapFrom(x => x.billingitem)).ReverseMap();
+                .ForMember(x => x.BillingItem, map => map.MapFrom(x => x.billingitem)).ReverseMap();
             CreateMap<billingitem, Models.BillingItem>();
         }
     }
