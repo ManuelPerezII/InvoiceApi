@@ -338,3 +338,15 @@ C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\obj\Debug\API
 C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\obj\Debug\API.Invoice.csproj.CopyComplete
 C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\obj\Debug\API.Invoice.dll
 C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\obj\Debug\API.Invoice.pdb
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\SimpleInjector.dll
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\SimpleInjector.Integration.Wcf.dll
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\SimpleInjector.Integration.Web.dll
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\SimpleInjector.Integration.Web.Mvc.dll
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\SimpleInjector.Integration.WebApi.dll
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\SimpleInjector.xml
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\SimpleInjector.Integration.Wcf.xml
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\SimpleInjector.Integration.Web.xml
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\SimpleInjector.Integration.Web.Mvc.xml
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\SimpleInjector.Integration.WebApi.xml

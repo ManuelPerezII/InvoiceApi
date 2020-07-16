@@ -11,6 +11,7 @@ using System.Data.Entity;
 using Newtonsoft.Json;
 using System.Configuration;
 using Microsoft.AspNetCore.Routing.Template;
+using API.Invoice.Profile;
 
 namespace API.Invoice.Providers
 {
@@ -19,11 +20,29 @@ namespace API.Invoice.Providers
         private readonly ZubairEntities dbContext;
         private readonly IMapper mapper;
         private readonly ILogger<InvoicesProvider> logger;
-        public InvoicesProvider(ZubairEntities dbContext, ILogger<InvoicesProvider> logger,IMapper mapper)
+
+        //public InvoicesProvider(ZubairEntities dbContext, ILogger<InvoicesProvider> logger,IMapper mapper)
+        //{
+        //    this.dbContext = dbContext;
+        //    this.logger = logger;
+        //    this.mapper = mapper;
+        //}
+        public InvoicesProvider()
         {
-            this.dbContext = dbContext;
-            this.logger = logger;
-            this.mapper = mapper;
+            this.mapper = CreateMapper();
+            this.dbContext = new ZubairEntities();
+        }
+
+        private IMapper CreateMapper()
+        {
+            var config = new MapperConfiguration(cfg => {
+                cfg.AddProfile<InvoiceProfile>();
+            });
+
+            config.AssertConfigurationIsValid();
+            IMapper mapper = config.CreateMapper();
+
+            return mapper;
         }
 
         public async Task<(bool IsSuccess, IEnumerable<Models.InvoiceViewModel> Invoices, string ErrorMessage)> GetInvoicesAsync()
