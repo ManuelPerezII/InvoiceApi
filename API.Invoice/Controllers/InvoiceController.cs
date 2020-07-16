@@ -73,7 +73,22 @@ namespace API.Invoice.Controllers
                 return NotFound();
             }
         }
-                
+
+        [HttpPost]
+        public async Task<IHttpActionResult> UpdateInvoice(Models.Invoice invoice)
+        {
+            using (ZubairEntities dbContext = new ZubairEntities())
+            {
+                invoicesProvider = new InvoicesProvider(dbContext, null, null);
+                var result = await invoicesProvider.UpdateInvoice(invoice);
+                if (result.IsSuccess)
+                {
+                    return Ok();
+                }
+                return NotFound();
+            }
+        }
+
         [HttpDelete]
         public async Task<IHttpActionResult> DeleteInvoice(int invoiceId)
         {
