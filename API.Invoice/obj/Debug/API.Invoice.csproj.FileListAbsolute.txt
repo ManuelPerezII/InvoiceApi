@@ -350,3 +350,9 @@ C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\SimpleInj
 C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\SimpleInjector.Integration.Web.xml
 C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\SimpleInjector.Integration.Web.Mvc.xml
 C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\SimpleInjector.Integration.WebApi.xml
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\Microsoft.Owin.Host.HttpListener.dll
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\Microsoft.Owin.Hosting.dll
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\System.Web.Http.Owin.dll
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\Microsoft.Owin.Host.HttpListener.xml
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\Microsoft.Owin.Hosting.xml
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\System.Web.Http.Owin.xml

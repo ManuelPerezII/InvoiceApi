@@ -17,18 +17,17 @@ namespace API.Invoice
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-            GlobalConfiguration.Configure(WebApiConfig.Register);
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
-            
-            var container = App_Start.DependencyInjectionConfig.CreateContainer();
-            container.Verify(SimpleInjector.VerificationOption.VerifyAndDiagnose);
-            DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(container));
-            SimpleInjectorServiceHostFactory.SetContainer(container);
+            //GlobalConfiguration.Configure(WebApiConfig.Register);
+            //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            //RouteConfig.RegisterRoutes(RouteTable.Routes);
+            //BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+            //var container = App_Start.DependencyInjectionConfig.CreateContainer();
+            //container.Verify(SimpleInjector.VerificationOption.VerifyAndDiagnose);
+            //DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(container));
+            //SimpleInjectorServiceHostFactory.SetContainer(container);
 
-            GlobalConfiguration.Configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);            
+            //GlobalConfiguration.Configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
         }
     }
 }
