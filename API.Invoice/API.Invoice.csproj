@@ -328,6 +328,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InvoiceItemController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="DB\billingitem.cs">
       <DependentUpon>ZubairDB.tt</DependentUpon>
@@ -375,6 +376,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IInvoiceItemsProvider.cs" />
     <Compile Include="Interfaces\IInvoicesProvider.cs" />
     <Compile Include="Models\BillingItem.cs" />
     <Compile Include="Models\Contractor.cs" />
@@ -387,9 +389,11 @@
     <Compile Include="Models\InvoiceLog.cs" />
     <Compile Include="Models\InvoiceStatus.cs" />
     <Compile Include="Profile\AutomapperConfig.cs" />
+    <Compile Include="Profile\InvoiceItemProfile.cs" />
     <Compile Include="Profile\InvoiceProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\DependencyInjectionStrapper.cs" />
+    <Compile Include="Providers\InvoiceItemsProvider.cs" />
     <Compile Include="Providers\InvoicesProvider.cs" />
   </ItemGroup>
   <ItemGroup>

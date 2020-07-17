@@ -11,7 +11,8 @@ namespace API.Invoice.Providers
     {
         public static void AddRegistrationsToContainer(Container container)
         {
-            container.Register<IInvoicesProvider, InvoicesProvider>(Lifestyle.Singleton);         
+            container.Register<IInvoicesProvider, InvoicesProvider>(Lifestyle.Singleton);
+            container.Register<IInvoiceItemsProvider, InvoiceItemsProvider>(Lifestyle.Singleton);
         }
     }
 }
