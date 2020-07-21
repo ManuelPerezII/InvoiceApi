@@ -6,20 +6,20 @@
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="nvarchar" MaxLength="50" />
-    <Property Name="cost" Type="nchar" MaxLength="10" />
+    <Property Name="cost" Type="decimal" Precision="18" Scale="0" />
   </EntityType>
   <EntityType Name="contractor">
     <Key>
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="name" Type="nchar" MaxLength="10" />
+    <Property Name="name" Type="nchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="customer">
     <Key>
       <PropertyRef Name="id" />
     </Key>
-    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="invoice">

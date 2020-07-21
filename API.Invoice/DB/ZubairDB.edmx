@@ -4,27 +4,27 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ZubairModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ZubairModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="billingitem">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="50" />
-          <Property Name="cost" Type="nchar" MaxLength="10" />
+          <Property Name="cost" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="contractor">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nchar" MaxLength="10" />
+          <Property Name="name" Type="nchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="customer">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="invoice">
@@ -222,8 +222,7 @@
             <End Role="invoicelog" EntitySet="invoicelog" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ZubairModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -233,7 +232,7 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="cost" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="cost" Type="Decimal" />
           <NavigationProperty Name="invoiceitems" Relationship="Self.FK_invoiceitem_billingitem" FromRole="billingitem" ToRole="invoiceitem" />
         </EntityType>
         <EntityType Name="contractor">
@@ -241,7 +240,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="invoices" Relationship="Self.FK_invoice_contractor" FromRole="contractor" ToRole="invoice" />
         </EntityType>
         <EntityType Name="customer">

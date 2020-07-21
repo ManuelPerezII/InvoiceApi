@@ -15,6 +15,7 @@ using System.Linq;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 using System;
+using System.Data.Entity;
 
 namespace API.Invoice.Controllers
 {
@@ -47,28 +48,14 @@ namespace API.Invoice.Controllers
             var httpContext = System.Web.HttpContext.Current;
             
             if (httpContext.Request.Files.Count > 0)
-            {            
-                for (int i = 0; i < httpContext.Request.Files.Count; i++)
-                {                   
-                    HttpPostedFile httpPostedFile = httpContext.Request.Files[i];
-                    if (httpPostedFile != null)
-                    {
-                        if(httpPostedFile.FileName.ToLower().Contains("data.json"))
-                        {
-                            var result = await invoicesProvider.CreateInvoice(httpPostedFile);
-                            if (result.IsSuccess)
-                            {
-                                return Ok();
-                            }                            
-                        }
-                        else
-                        {                            
-                            var fileSavePath = Path.Combine(HostingEnvironment.MapPath(ConfigurationManager.AppSettings["fileUploadFolder"]), httpPostedFile.FileName);                            
-                            httpPostedFile.SaveAs(fileSavePath);
-                        }                        
-                    }
+            {
+                var result = await invoicesProvider.CreateInvoice(httpContext.Request.Files);
+                if (result.IsSuccess)
+                {
+                    return Ok();
                 }
-            }                        
+            }    
+            
             return NotFound();
         }
 

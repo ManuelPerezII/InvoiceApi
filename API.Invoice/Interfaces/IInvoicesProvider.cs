@@ -10,8 +10,8 @@ namespace API.Invoice.Interfaces
     public interface IInvoicesProvider
     {
         Task<(bool IsSuccess, IEnumerable<Models.InvoiceViewModel> Invoices, string ErrorMessage)> GetInvoicesAsync();
-        Task<(bool IsSuccess, string ErrorMessage)> CreateInvoice(HttpPostedFile httpPostedFile);        
+        Task<(bool IsSuccess, string ErrorMessage)> CreateInvoice(HttpFileCollection files);        
         Task<(bool IsSuccess, string ErrorMessage)> UpdateInvoice(Models.Invoice invoice);
-        Task<(bool IsSuccess, string ErrorMessage)> DeleteInvoice(int InvoiceID);
+        Task<(bool IsSuccess, string ErrorMessage)> DeleteInvoice(int InvoiceID);        
     }
 }

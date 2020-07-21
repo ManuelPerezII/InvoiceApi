@@ -22,7 +22,7 @@ namespace API.Invoice.DB
     
         public int id { get; set; }
         public string name { get; set; }
-        public string cost { get; set; }
+        public Nullable<decimal> cost { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<invoiceitem> invoiceitems { get; set; }

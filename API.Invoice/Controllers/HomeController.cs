@@ -66,8 +66,9 @@ namespace API.Invoice.Controllers
                     {
                         // Construct file save path  
                         var fileSavePath = "";//Path.Combine(HostingEnvironment.MapPath(ConfigurationManager.AppSettings["fileUploadFolder"]), httpPostedFile.FileName);
-
-                        // Save the uploaded file  
+                                              //    var fileSavePath = Path.Combine(HostingEnvironment.MapPath(ConfigurationManager.AppSettings["fileUploadFolder"]), httpPostedFile.FileName);
+                                              //    httpPostedFile.SaveAs(fileSavePath);
+                                              // Save the uploaded file  
                         httpPostedFile.SaveAs(fileSavePath);
                     }
                 }

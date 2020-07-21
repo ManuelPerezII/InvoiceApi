@@ -6,7 +6,7 @@
     </Key>
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="cost" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="cost" Type="Decimal" />
     <NavigationProperty Name="invoiceitems" Relationship="Self.FK_invoiceitem_billingitem" FromRole="billingitem" ToRole="invoiceitem" />
   </EntityType>
   <EntityType Name="contractor">
@@ -14,7 +14,7 @@
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
     <NavigationProperty Name="invoices" Relationship="Self.FK_invoice_contractor" FromRole="contractor" ToRole="invoice" />
   </EntityType>
   <EntityType Name="customer">
