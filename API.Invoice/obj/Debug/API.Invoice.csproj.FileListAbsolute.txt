@@ -333,7 +333,6 @@ C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\System.We
 C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\System.Web.WebPages.Razor.xml
 C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\Antlr3.Runtime.pdb
 C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\obj\Debug\API.Invoice.csprojAssemblyReference.cache
 C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\obj\Debug\API.Invoice.csproj.CoreCompileInputs.cache
 C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\obj\Debug\API.Invoice.csproj.CopyComplete
 C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\obj\Debug\API.Invoice.dll
@@ -356,3 +355,4 @@ C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\System.We
 C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\Microsoft.Owin.Host.HttpListener.xml
 C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\Microsoft.Owin.Hosting.xml
 C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\System.Web.Http.Owin.xml
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\obj\Debug\API.Invoice.csprojAssemblyReference.cache

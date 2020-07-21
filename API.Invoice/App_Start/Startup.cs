@@ -20,6 +20,9 @@ using System.Web.Mvc;
 using SimpleInjector.Integration.Web.Mvc;
 using SimpleInjector.Integration.Wcf;
 using SimpleInjector.Integration.WebApi;
+using System.Net.Http.Headers;
+using System.Net.Http.Formatting;
+using System.Linq;
 
 [assembly: OwinStartup(typeof(API.Invoice.App_Start.Startup))]
 
@@ -39,7 +42,8 @@ namespace API.Invoice.App_Start
             HttpConfiguration config = new HttpConfiguration();
            
             config.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
-           
+
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("multipart/form-data"));
 
             config.MapHttpAttributeRoutes();
 
@@ -48,6 +52,8 @@ namespace API.Invoice.App_Start
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
 
             app.UseWebApi(config);
             // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888

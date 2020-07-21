@@ -13,6 +13,8 @@ namespace API.Invoice.Providers
         {
             container.Register<IInvoicesProvider, InvoicesProvider>(Lifestyle.Singleton);
             container.Register<IInvoiceItemsProvider, InvoiceItemsProvider>(Lifestyle.Singleton);
+            container.Register<IInvoiceLogsProvider, InvoiceLogsProvider>(Lifestyle.Singleton);
+            container.Register<IInvoiceFilesProvider, InvoiceFilesProvider>(Lifestyle.Singleton);
         }
     }
 }

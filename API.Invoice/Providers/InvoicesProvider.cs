@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using System.Configuration;
 using Microsoft.AspNetCore.Routing.Template;
 using API.Invoice.Profile;
+using System.IO;
 
 namespace API.Invoice.Providers
 {
@@ -75,26 +76,52 @@ namespace API.Invoice.Providers
             }
         }
 
-        public async Task<(bool IsSuccess, string ErrorMessage)> CreateInvoice(Models.Invoice invoice)
+        public async Task<(bool IsSuccess, string ErrorMessage)> CreateInvoice(HttpPostedFile httpPostedFile)
         {
             try
-            {
-                using (ZubairEntities dbContext = new ZubairEntities())
+            {                
+                if (httpPostedFile.ContentLength > 0)
                 {
-                    if (invoice != null)
-                    {
-                        var tempInvoice = new invoice();
-                        tempInvoice.contractor_id = invoice.ContractorId;
-                        tempInvoice.customer_id = invoice.CustomerId;
-                        tempInvoice.creationdate = DateTime.Now;
-                        tempInvoice.invoice_status_id = invoice.InvoiceStatusId;
-                        tempInvoice.isactive = invoice.IsActive;
-                        dbContext.invoices.Add(tempInvoice);
-                        await dbContext.SaveChangesAsync();
+                    string str = (new StreamReader(httpPostedFile.InputStream)).ReadToEnd();
 
-                        return (true, null);
+                    dynamic array = JsonConvert.DeserializeObject(str);
+                    foreach (var item in array)
+                    {                        
+                        using (ZubairEntities dbContext = new ZubairEntities())
+                        {
+                            if (item != null)
+                            {
+                                // invoice                                
+                                var tempInvoice = new invoice();
+                                tempInvoice.contractor_id = item.ContractorId;
+                                tempInvoice.customer_id = item.CustomerID;
+                                tempInvoice.creationdate = DateTime.Now;
+                                tempInvoice.invoice_status_id = item.InvoiceStatusId;
+                                tempInvoice.isactive = item.IsActive;
+                                dbContext.invoices.Add(tempInvoice);
+
+
+                                // create invoice items
+
+                                // create billing item
+
+                                // create file
+
+                                // create logs
+                                var tempInvoicelog = new invoicelog();
+                                //tempInvoicelog.invoice_id = 
+                                tempInvoicelog.invoicestatusid = item.InvoiceStatusId;
+                                tempInvoicelog.datecreated = DateTime.Now;
+                                dbContext.invoicelogs.Add(tempInvoicelog);
+
+                                await dbContext.SaveChangesAsync();
+                                return (true, null);
+                            }
+                        }
                     }
                 }
+
+                
                 return (false, "Not Found");
             }
             catch (Exception ex)

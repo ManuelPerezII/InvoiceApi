@@ -1,19 +1,20 @@
 ﻿
-using API.Invoice.DB;
 using API.Invoice.Interfaces;
-using API.Invoice.Profile;
-using API.Invoice.Providers;
-using AutoMapper;
-using Microsoft.Ajax.Utilities;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.SessionState;
+using System.Web.Hosting;
+using System.IO;
+using System.Configuration;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Net;
+using Microsoft.AspNetCore.Http;
+using System.Linq;
+using System.Web.Script.Serialization;
+using Newtonsoft.Json;
+using System;
 
 namespace API.Invoice.Controllers
 {
@@ -39,17 +40,36 @@ namespace API.Invoice.Controllers
             return NotFound();            
         }
         
-
+        [Route("CreateInvoice")]        
         [HttpPost]
-        public async Task<IHttpActionResult> CreateInvoice(Models.Invoice invoice)
-        {
-            var result = await invoicesProvider.CreateInvoice(invoice);
-            if (result.IsSuccess)
-            {
-                return Ok();
-            }
+        public async Task<IHttpActionResult> CreateInvoice()
+        {            
+            var httpContext = System.Web.HttpContext.Current;
+            
+            if (httpContext.Request.Files.Count > 0)
+            {            
+                for (int i = 0; i < httpContext.Request.Files.Count; i++)
+                {                   
+                    HttpPostedFile httpPostedFile = httpContext.Request.Files[i];
+                    if (httpPostedFile != null)
+                    {
+                        if(httpPostedFile.FileName.ToLower().Contains("data.json"))
+                        {
+                            var result = await invoicesProvider.CreateInvoice(httpPostedFile);
+                            if (result.IsSuccess)
+                            {
+                                return Ok();
+                            }                            
+                        }
+                        else
+                        {                            
+                            var fileSavePath = Path.Combine(HostingEnvironment.MapPath(ConfigurationManager.AppSettings["fileUploadFolder"]), httpPostedFile.FileName);                            
+                            httpPostedFile.SaveAs(fileSavePath);
+                        }                        
+                    }
+                }
+            }                        
             return NotFound();
-
         }
 
         [HttpPost]
