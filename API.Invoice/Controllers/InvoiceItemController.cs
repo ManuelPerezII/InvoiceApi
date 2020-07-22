@@ -15,7 +15,7 @@ namespace API.Invoice.Controllers
     [RoutePrefix("api/invoiceitem")]
     public class InvoiceItemController : ApiController
     {
-        private IInvoiceItemsProvider invoiceItemsProvider;
+        private readonly IInvoiceItemsProvider invoiceItemsProvider;
         public InvoiceItemController(IInvoiceItemsProvider invoiceItemsProvider)
         {
             this.invoiceItemsProvider = invoiceItemsProvider;

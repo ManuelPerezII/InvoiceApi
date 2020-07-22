@@ -34,5 +34,6 @@ namespace API.Invoice.DB
         public virtual DbSet<invoicelog> invoicelogs { get; set; }
         public virtual DbSet<invoicestatu> invoicestatus { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<authorizedapp> authorizedapps { get; set; }
     }
 }

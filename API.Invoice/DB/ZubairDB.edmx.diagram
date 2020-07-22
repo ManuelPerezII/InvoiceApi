@@ -22,6 +22,7 @@
         <AssociationConnector Association="ZubairModel.FK_invoicelog_invoice" ManuallyRouted="false" />
         <AssociationConnector Association="ZubairModel.FK_invoicefile_invoiceitem" ManuallyRouted="false" />
         <AssociationConnector Association="ZubairModel.FK_invoicelog_invoicestatus" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ZubairModel.authorizedapp" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -6,7 +6,7 @@
     </Key>
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="cost" Type="Decimal" />
+    <Property Name="cost" Type="Decimal" Precision="18" Scale="0" />
     <NavigationProperty Name="invoiceitems" Relationship="Self.FK_invoiceitem_billingitem" FromRole="billingitem" ToRole="invoiceitem" />
   </EntityType>
   <EntityType Name="contractor">
@@ -232,5 +232,16 @@
       <End Role="invoicestatus" EntitySet="invoicestatus" />
       <End Role="invoicelog" EntitySet="invoicelogs" />
     </AssociationSet>
+    <EntitySet Name="authorizedapps" EntityType="ZubairModel.authorizedapp" />
   </EntityContainer>
+  <EntityType Name="authorizedapp">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="AppToken" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="AppSecret" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="TokenExpiration" Type="DateTime" Precision="3" />
+  </EntityType>
 </Schema>

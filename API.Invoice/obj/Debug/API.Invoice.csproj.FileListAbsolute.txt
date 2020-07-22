@@ -356,3 +356,17 @@ C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\Microsoft
 C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\Microsoft.Owin.Hosting.xml
 C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\System.Web.Http.Owin.xml
 C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\obj\Debug\API.Invoice.csprojAssemblyReference.cache
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\Microsoft.IdentityModel.Logging.dll
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\Microsoft.IdentityModel.Tokens.dll
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\Microsoft.Owin.Security.Jwt.dll
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\Microsoft.IdentityModel.JsonWebTokens.pdb
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\Microsoft.IdentityModel.JsonWebTokens.xml
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\Microsoft.IdentityModel.Logging.pdb
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\Microsoft.IdentityModel.Logging.xml
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\Microsoft.IdentityModel.Tokens.pdb
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\Microsoft.IdentityModel.Tokens.xml
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\Microsoft.Owin.Security.Jwt.xml
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\System.IdentityModel.Tokens.Jwt.pdb
+C:\Users\U012MXP\Source\Repos\ManuelPerezII\InvoiceApi\API.Invoice\bin\System.IdentityModel.Tokens.Jwt.xml

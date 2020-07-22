@@ -15,6 +15,7 @@ namespace API.Invoice.Providers
             container.Register<IInvoiceItemsProvider, InvoiceItemsProvider>(Lifestyle.Singleton);
             container.Register<IInvoiceLogsProvider, InvoiceLogsProvider>(Lifestyle.Singleton);
             container.Register<IInvoiceFilesProvider, InvoiceFilesProvider>(Lifestyle.Singleton);
+            container.Register<IAuthorizedAppProvider, AuthorizedAppProvider>(Lifestyle.Singleton);
         }
     }
 }

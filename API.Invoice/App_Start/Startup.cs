@@ -23,6 +23,9 @@ using SimpleInjector.Integration.WebApi;
 using System.Net.Http.Headers;
 using System.Net.Http.Formatting;
 using System.Linq;
+using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.Jwt;
+using API.Invoice.Config;
 
 [assembly: OwinStartup(typeof(API.Invoice.App_Start.Startup))]
 
@@ -53,7 +56,9 @@ namespace API.Invoice.App_Start
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
+            //var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
+
+            ConfigureJwt(app);
 
             app.UseWebApi(config);
             // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888
@@ -66,6 +71,20 @@ namespace API.Invoice.App_Start
             
             
             //services.AddControllers();
+        }
+
+        public void ConfigureJwt(IAppBuilder app)
+        {
+            app.UseJwtBearerAuthentication(
+                new JwtBearerAuthenticationOptions
+                {
+                    AuthenticationMode = AuthenticationMode.Active,
+                    AllowedAudiences = new[] { GlobalConfig.Audience },
+                    IssuerSecurityKeyProviders = new IIssuerSecurityKeyProvider[]
+                    {
+                        new SymmetricKeyIssuerSecurityKeyProvider(GlobalConfig.Issuer, GlobalConfig.Secret)
+                    }
+                });
         }
     }
 }

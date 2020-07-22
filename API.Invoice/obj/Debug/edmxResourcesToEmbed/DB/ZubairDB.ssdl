@@ -1,5 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="ZubairModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="authorizedapp">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="150" />
+    <Property Name="AppToken" Type="varchar" MaxLength="32" />
+    <Property Name="AppSecret" Type="varchar" MaxLength="32" />
+    <Property Name="TokenExpiration" Type="datetime" />
+  </EntityType>
   <EntityType Name="billingitem">
     <Key>
       <PropertyRef Name="id" />
@@ -175,6 +185,7 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="ZubairModelStoreContainer">
+    <EntitySet Name="authorizedapp" EntityType="Self.authorizedapp" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="billingitem" EntityType="Self.billingitem" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="contractor" EntityType="Self.contractor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="customer" EntityType="Self.customer" Schema="dbo" store:Type="Tables" />

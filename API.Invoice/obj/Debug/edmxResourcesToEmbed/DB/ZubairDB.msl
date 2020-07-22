@@ -88,5 +88,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="authorizedapps">
+      <EntityTypeMapping TypeName="ZubairModel.authorizedapp">
+        <MappingFragment StoreEntitySet="authorizedapp">
+          <ScalarProperty Name="TokenExpiration" ColumnName="TokenExpiration" />
+          <ScalarProperty Name="AppSecret" ColumnName="AppSecret" />
+          <ScalarProperty Name="AppToken" ColumnName="AppToken" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

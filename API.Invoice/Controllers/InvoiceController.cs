@@ -23,7 +23,7 @@ namespace API.Invoice.Controllers
     [RoutePrefix("api/invoice")]
     public class InvoiceController : ApiController,IRequiresSessionState
     {
-        private  IInvoicesProvider invoicesProvider;     
+        private readonly  IInvoicesProvider invoicesProvider;     
                 
         public InvoiceController(IInvoicesProvider invoicesProvider)
         {
