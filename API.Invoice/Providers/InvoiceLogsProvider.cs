@@ -16,13 +16,16 @@ namespace API.Invoice.Providers
             try
             {
                 using (ZubairEntities dbContext = new ZubairEntities())
-                {
+                {                    
                     if (invoiceLog != null)
                     {
-                        var tempInvoiceItem = new invoicelog();
-                        tempInvoiceItem.invoice_id = invoiceLog.InvoiceId;
-                        tempInvoiceItem.invoicestatusid = invoiceLog.InvoiceStatusID;
-                        tempInvoiceItem.datecreated = DateTime.Now;                        
+                        var tempInvoiceItem = new invoicelog 
+                        { 
+                            invoice_id = invoiceLog.InvoiceId,
+                            invoicestatusid = invoiceLog.InvoiceStatusID,
+                            datecreated = DateTime.Now
+                        };
+                        
                         dbContext.invoicelogs.Add(tempInvoiceItem);
                         await dbContext.SaveChangesAsync();
 

@@ -102,12 +102,15 @@ namespace API.Invoice.Providers
                                     if (item != null)
                                     {
                                         // invoice                                
-                                        var tempInvoice = new invoice();
-                                        tempInvoice.contractor_id = item.ContractorId;
-                                        tempInvoice.customer_id = item.CustomerID;
-                                        tempInvoice.creationdate = DateTime.Now;
-                                        tempInvoice.invoice_status_id = item.InvoiceStatusId;
-                                        tempInvoice.isactive = item.IsActive;
+                                        var tempInvoice = new invoice 
+                                        {
+                                            contractor_id = item.ContractorId,
+                                            customer_id = item.CustomerID,
+                                            creationdate = DateTime.Now,
+                                            invoice_status_id = item.InvoiceStatusId,
+                                            isactive = item.IsActive
+                                        };
+                                        
                                         dbContext.invoices.Add(tempInvoice);
                                         await dbContext.SaveChangesAsync();
 
@@ -119,20 +122,26 @@ namespace API.Invoice.Providers
                                             foreach (var bt in it.BillingItem)
                                             {
                                                 // create billing item
-                                                var tempBillingItem = new billingitem();
-                                                tempBillingItem.cost = bt.cost;
-                                                tempBillingItem.name = bt.name;
+                                                var tempBillingItem = new billingitem
+                                                {
+                                                    cost = bt.cost,
+                                                    name = bt.name
+                                                };
+                                                
                                                 dbContext.billingitems.Add(tempBillingItem);
                                                 await dbContext.SaveChangesAsync();
                                                 dbContext.Entry(tempBillingItem).GetDatabaseValues();
                                                 int billingItemId = tempBillingItem.id;
 
                                                 // create invoice items 
-                                                var tempInvoiceItem = new invoiceitem();
-                                                tempInvoiceItem.invoice_id = invoiceID;
-                                                tempInvoiceItem.billing_item_id = billingItemId;
-                                                tempInvoiceItem.discount = it.Discount;
-                                                tempInvoiceItem.totalcost = it.TotalCost;
+                                                var tempInvoiceItem = new invoiceitem 
+                                                {
+                                                    invoice_id = invoiceID,
+                                                    billing_item_id = billingItemId,
+                                                    discount = it.Discount,
+                                                    totalcost = it.TotalCost
+                                                };
+                                                
                                                 dbContext.invoiceitems.Add(tempInvoiceItem);
                                                 await dbContext.SaveChangesAsync();
                                                 dbContext.Entry(tempInvoiceItem).GetDatabaseValues();
@@ -141,9 +150,12 @@ namespace API.Invoice.Providers
                                                 foreach (var invFile in it.InvoiceFile)
                                                 {
                                                     // create file
-                                                    var tempInvoiceFile = new invoicefile();
-                                                    tempInvoiceFile.invoiceitem_id = invoiceItemId;
-                                                    tempInvoiceFile.name = invFile.name;
+                                                    var tempInvoiceFile = new invoicefile
+                                                    {
+                                                        invoiceitem_id = invoiceItemId,
+                                                        name = invFile.name
+                                                    };
+                                                    
                                                     var fileSavePath = Path.Combine(HostingEnvironment.MapPath(ConfigurationManager.AppSettings["fileUploadFolder"]), invFile.name);
                                                     tempInvoiceFile.filelocation = fileSavePath; 
                                                     dbContext.invoicefiles.Add(tempInvoiceFile);
@@ -152,10 +164,13 @@ namespace API.Invoice.Providers
                                         }
 
                                         // create logs
-                                        var tempInvoicelog = new invoicelog();
-                                        tempInvoicelog.invoice_id = invoiceID;
-                                        tempInvoicelog.invoicestatusid = item.InvoiceStatusId;
-                                        tempInvoicelog.datecreated = DateTime.Now;
+                                        var tempInvoicelog = new invoicelog 
+                                        {
+                                            invoice_id = invoiceID,
+                                            invoicestatusid = item.InvoiceStatusId,
+                                            datecreated = DateTime.Now
+                                        };
+                                        
                                         dbContext.invoicelogs.Add(tempInvoicelog);
 
                                         await dbContext.SaveChangesAsync();
