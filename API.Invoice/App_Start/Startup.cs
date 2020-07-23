@@ -26,6 +26,7 @@ using System.Linq;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Jwt;
 using API.Invoice.Config;
+using API.Invoice.Filters;
 
 [assembly: OwinStartup(typeof(API.Invoice.App_Start.Startup))]
 
@@ -45,6 +46,8 @@ namespace API.Invoice.App_Start
             HttpConfiguration config = new HttpConfiguration();
            
             config.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
+
+            config.MessageHandlers.Add(new TokenValidationHandler());
 
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("multipart/form-data"));
 

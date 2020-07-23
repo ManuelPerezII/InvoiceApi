@@ -40,7 +40,7 @@ namespace API.Invoice.Providers
                 {
                     var authorizedApp = await dbContext.authorizedapps
                                         .Where(c=>c.AppToken == token
-                                        && c.AppSecret == password && c.TokenExpiration < DateTime.Now)
+                                        && c.AppSecret == password && DateTime.UtcNow < c.TokenExpiration)
                                         .FirstOrDefaultAsync();
 
                     if (authorizedApp != null)

@@ -394,6 +394,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ZubairDB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Filters\AutoAuthenticationHandler.cs" />
+    <Compile Include="Filters\TokenValidationHandler.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
