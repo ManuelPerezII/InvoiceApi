@@ -19,7 +19,8 @@ using System.Data.Entity;
 
 namespace API.Invoice.Controllers
 {
-    
+
+    [Authorize]
     [RoutePrefix("api/invoice")]
     public class InvoiceController : ApiController,IRequiresSessionState
     {
@@ -33,12 +34,12 @@ namespace API.Invoice.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetInvoicesAsync()
         {
-            var result = await invoicesProvider.GetInvoicesAsync();
-            if (result.IsSuccess)
+            var (IsSuccess, Invoices, ErrorMessage) = await invoicesProvider.GetInvoicesAsync();
+            if (IsSuccess)
             {
-                return Json(result.Invoices);
+                return Json(Invoices);
             }
-            return NotFound();            
+            return BadRequest(ErrorMessage);            
         }
         
         [Route("CreateInvoice")]        
@@ -49,36 +50,40 @@ namespace API.Invoice.Controllers
             
             if (httpContext.Request.Files.Count > 0)
             {
-                var result = await invoicesProvider.CreateInvoice(httpContext.Request.Files);
-                if (result.IsSuccess)
+                var (IsSuccess, ErrorMessage) = await invoicesProvider.CreateInvoice(httpContext.Request.Files);
+                if (IsSuccess)
                 {
                     return Ok();
                 }
+                else
+                {
+                    BadRequest(ErrorMessage);
+                }
             }    
             
-            return NotFound();
+            return BadRequest();
         }
 
         [HttpPost]
         public async Task<IHttpActionResult> UpdateInvoice(Models.Invoice invoice)
         {
-            var result = await invoicesProvider.UpdateInvoice(invoice);
-            if (result.IsSuccess)
+            var (IsSuccess, ErrorMessage) = await invoicesProvider.UpdateInvoice(invoice);
+            if (IsSuccess)
             {
                 return Ok();
             }
-            return NotFound();
+            return BadRequest(ErrorMessage);
         }
 
         [HttpDelete]
         public async Task<IHttpActionResult> DeleteInvoice(int invoiceId)
         {
-            var result = await invoicesProvider.DeleteInvoice(invoiceId);
-            if (result.IsSuccess)
+            var (IsSuccess, ErrorMessage) = await invoicesProvider.DeleteInvoice(invoiceId);
+            if (IsSuccess)
             {
                 return Ok();
             }
-            return NotFound();
+            return BadRequest(ErrorMessage); 
         }
 
         #region Commented

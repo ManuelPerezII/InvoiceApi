@@ -24,35 +24,35 @@ namespace API.Invoice.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetInvoiceItemsAsync(int id)
         {
-            var result = await invoiceItemsProvider.GetInvoiceItems(id);
-            if (result.IsSuccess)
+            var (IsSuccess,InvoiceItems,ErrorMessage)  = await invoiceItemsProvider.GetInvoiceItems(id);
+            if (IsSuccess)
             {
-                return Json(result.InvoiceItems);
+                return Json(InvoiceItems);
             }
-            return NotFound();
+            return BadRequest(ErrorMessage);
         }
 
         [HttpPost]
         public async Task<IHttpActionResult> CreateInvoiceItem(Models.InvoiceItem invoiceItem)
         {
-            var result = await invoiceItemsProvider.CreateInvoiceItem(invoiceItem);
-            if (result.IsSuccess)
+            var (IsSuccess, ErrorMessage) = await invoiceItemsProvider.CreateInvoiceItem(invoiceItem);
+            if (IsSuccess)
             {
                 return Ok();
             }
-            return NotFound();
+            return BadRequest(ErrorMessage);
 
         }
 
         [HttpPost]
         public async Task<IHttpActionResult> UpdateInvoiceItem(Models.InvoiceItem invoiceItem)
         {
-            var result = await invoiceItemsProvider.UpdateInvoiceItem(invoiceItem);
-            if (result.IsSuccess)
+            var (IsSuccess, ErrorMessage) = await invoiceItemsProvider.UpdateInvoiceItem(invoiceItem);
+            if (IsSuccess)
             {
                 return Ok();
             }
-            return NotFound();
+            return BadRequest(ErrorMessage);
         }        
     }
 }
