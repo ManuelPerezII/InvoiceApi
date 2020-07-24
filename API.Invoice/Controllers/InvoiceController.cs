@@ -20,7 +20,7 @@ using System.Data.Entity;
 namespace API.Invoice.Controllers
 {
 
-    //[Authorize]
+    [Authorize]
     [RoutePrefix("api/invoice")]
     public class InvoiceController : ApiController,IRequiresSessionState
     {
