@@ -285,7 +285,7 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="invoiceitem_id" Type="Int32" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="filelocation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="filelocation" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="invoiceitem" Relationship="Self.FK_invoicefile_invoiceitem" FromRole="invoicefile" ToRole="invoiceitem" />
         </EntityType>
         <EntityType Name="invoiceitem">

@@ -12,6 +12,7 @@ using System.Web.Http;
 
 namespace API.Invoice.Controllers
 {
+    [Authorize]
     [RoutePrefix("api/invoiceitem")]
     public class InvoiceItemController : ApiController
     {
