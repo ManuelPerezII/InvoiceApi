@@ -31,63 +31,47 @@ namespace API.Invoice.Controllers
         {
             return Ok();
         }
-
-        //[Route("Multiple")]
-        //[HttpPost]        
-        //public IHttpActionResult Multiple([FromForm]IFormFile file)
-        //{
-        //    var stream = file.OpenReadStream();
-        //    var name = file.FileName;
-        //    return Ok();
-        //}
-
-        [Route("PostInvoice")]
-        [HttpPost]
-        public IHttpActionResult PostInvoice()
-        {            
-            return Ok();
-        }
-
-
-        [Route("Upload")]
-        [HttpPost]
-        public HttpResponseMessage Upload()
-        {
-            var httpContext = HttpContext.Current;
-
-            // Check for any uploaded file  
-            if (httpContext.Request.Files.Count > 0)
-            {
-                //Loop through uploaded files  
-                for (int i = 0; i < httpContext.Request.Files.Count; i++)
-                {
-                    HttpPostedFile httpPostedFile = httpContext.Request.Files[i];
-                    if (httpPostedFile != null)
-                    {
-                        // Construct file save path  
-                        var fileSavePath = "";//Path.Combine(HostingEnvironment.MapPath(ConfigurationManager.AppSettings["fileUploadFolder"]), httpPostedFile.FileName);
-                                              //    var fileSavePath = Path.Combine(HostingEnvironment.MapPath(ConfigurationManager.AppSettings["fileUploadFolder"]), httpPostedFile.FileName);
-                                              //    httpPostedFile.SaveAs(fileSavePath);
-                                              // Save the uploaded file  
-                        httpPostedFile.SaveAs(fileSavePath);
-                    }
-                }
-            }
-
-            // Return status code  
-            return Request.CreateResponse(HttpStatusCode.Created);
-        }
+     
     }
 
-    
+    #region "Commented"
+    //[Route("Upload")]
+    //[HttpPost]
+    //public HttpResponseMessage Upload()
+    //{
+    //    var httpContext = HttpContext.Current;
 
-        //public class HomeController : Controller
-        //{
-        //    public ActionResult Index()
-        //    {
-        //        ViewBag.Title = "Home Page";
+    //    // Check for any uploaded file  
+    //    if (httpContext.Request.Files.Count > 0)
+    //    {
+    //        //Loop through uploaded files  
+    //        for (int i = 0; i < httpContext.Request.Files.Count; i++)
+    //        {
+    //            HttpPostedFile httpPostedFile = httpContext.Request.Files[i];
+    //            if (httpPostedFile != null)
+    //            {
+    //                // Construct file save path  
+    //                var fileSavePath = "";//Path.Combine(HostingEnvironment.MapPath(ConfigurationManager.AppSettings["fileUploadFolder"]), httpPostedFile.FileName);
+    //                                      //    var fileSavePath = Path.Combine(HostingEnvironment.MapPath(ConfigurationManager.AppSettings["fileUploadFolder"]), httpPostedFile.FileName);
+    //                                      //    httpPostedFile.SaveAs(fileSavePath);
+    //                                      // Save the uploaded file  
+    //                httpPostedFile.SaveAs(fileSavePath);
+    //            }
+    //        }
+    //    }
 
-        //        return View();
-        //    }
-        //}
- }
+    //    // Return status code  
+    //    return Request.CreateResponse(HttpStatusCode.Created);
+    //}
+
+    //public class HomeController : Controller
+    //{
+    //    public ActionResult Index()
+    //    {
+    //        ViewBag.Title = "Home Page";
+
+    //        return View();
+    //    }
+    //}
+    #endregion
+}

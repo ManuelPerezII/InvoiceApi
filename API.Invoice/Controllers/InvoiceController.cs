@@ -75,6 +75,17 @@ namespace API.Invoice.Controllers
             return BadRequest(ErrorMessage);
         }
 
+        [HttpPut]
+        public async Task<IHttpActionResult> UpdateInvoiceStatus(int invoiceID, int statusId)
+        {
+            var (IsSuccess, ErrorMessage) = await invoicesProvider.UpdateInvoiceStatus(invoiceID, statusId);
+            if (IsSuccess)
+            {
+                return Ok();
+            }
+            return BadRequest(ErrorMessage);
+        }
+
         [HttpDelete]
         public async Task<IHttpActionResult> DeleteInvoice(int invoiceId)
         {

@@ -289,5 +289,31 @@ namespace API.Invoice.Providers
 
             dbContext.invoicelogs.Add(tempInvoicelog);
         }
+
+        public async Task<(bool IsSuccess, string ErrorMessage)> UpdateInvoiceStatus(int InvoiceID, int StatusID)
+        {
+            try
+            {
+                using (ZubairEntities dbContext = new ZubairEntities())
+                {
+                    var invoice = await dbContext.invoices.Where(c => c.id == InvoiceID).FirstOrDefaultAsync();
+
+                    if (invoice != null)
+                    {
+                        invoice.invoice_status_id = StatusID;
+                        await dbContext.SaveChangesAsync();
+
+                        return (true, null);
+                    }
+                }
+
+                return (false, "Not Found");
+            }
+            catch (Exception ex)
+            {
+                logger?.LogError(ex.ToString());
+                return (false, ex.Message);
+            }
+        }
     }
 }
