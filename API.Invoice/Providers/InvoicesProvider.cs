@@ -20,7 +20,7 @@ namespace API.Invoice.Providers
     public class InvoicesProvider : IInvoicesProvider
     {        
         private readonly IMapper mapper;
-        private readonly ILogger<InvoicesProvider> logger;
+        //private readonly ILogger<InvoicesProvider> logger;
 
         //public InvoicesProvider(ZubairEntities dbContext, ILogger<InvoicesProvider> logger,IMapper mapper)
         //{
@@ -72,7 +72,7 @@ namespace API.Invoice.Providers
             }
             catch (Exception ex)
             {
-                logger?.LogError(ex.ToString());
+                //logger?.LogError(ex.ToString());
                 return (false, null, ex.Message);
             }
         }
@@ -208,7 +208,7 @@ namespace API.Invoice.Providers
             }
             catch (Exception ex)
             {
-                logger?.LogError(ex.ToString());
+                //logger?.LogError(ex.ToString());
                 return (false, ex.Message);
             }
         }
@@ -346,7 +346,7 @@ namespace API.Invoice.Providers
             }
             catch (Exception ex)
             {
-                logger?.LogError(ex.ToString());
+                //logger?.LogError(ex.ToString());
                 return (false, ex.Message);
             }
         }
@@ -372,7 +372,7 @@ namespace API.Invoice.Providers
             }
             catch (Exception ex)
             {
-                logger?.LogError(ex.ToString());
+                //logger?.LogError(ex.ToString());
                 return (false, ex.Message);
             }
         }
@@ -412,7 +412,7 @@ namespace API.Invoice.Providers
             }
             catch (Exception ex)
             {
-                logger?.LogError(ex.ToString());
+                //logger?.LogError(ex.ToString());
                 return (false, ex.Message);
             }
         }

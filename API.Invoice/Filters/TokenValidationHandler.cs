@@ -60,13 +60,13 @@ namespace API.Invoice.Filters
 
                 return base.SendAsync(request, cancellationToken);
             }
-            catch (SecurityTokenValidationException e)
+            catch (SecurityTokenValidationException)
             {
-                statusCode = HttpStatusCode.Unauthorized;
+                statusCode = HttpStatusCode.Unauthorized;                
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                statusCode = HttpStatusCode.InternalServerError;
+                statusCode = HttpStatusCode.InternalServerError;                
             }
             return Task<HttpResponseMessage>.Factory.StartNew(() => new HttpResponseMessage(statusCode) { });
         }
