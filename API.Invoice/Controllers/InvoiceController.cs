@@ -65,14 +65,24 @@ namespace API.Invoice.Controllers
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> UpdateInvoice(Models.Invoice invoice)
+        public async Task<IHttpActionResult> UpdateInvoice()
         {
-            var (IsSuccess, ErrorMessage) = await invoicesProvider.UpdateInvoice(invoice);
-            if (IsSuccess)
+            var httpContext = System.Web.HttpContext.Current;
+
+            if (httpContext.Request.Files.Count > 0)
             {
-                return Ok();
+                var (IsSuccess, ErrorMessage) = await invoicesProvider.UpdateInvoice(httpContext.Request.Files);
+                if (IsSuccess)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    BadRequest(ErrorMessage);
+                }
             }
-            return BadRequest(ErrorMessage);
+
+            return BadRequest();
         }
 
         [HttpPut]

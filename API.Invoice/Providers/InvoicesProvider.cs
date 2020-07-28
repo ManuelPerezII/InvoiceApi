@@ -219,28 +219,129 @@ namespace API.Invoice.Providers
             httpPostedFile.SaveAs(fileSavePath);
         }
 
-        public async Task<(bool IsSuccess, string ErrorMessage)> UpdateInvoice(Models.Invoice invoice)
+        public async Task<(bool IsSuccess, string ErrorMessage)> UpdateInvoice(HttpFileCollection files)
         {
+            bool IsSuccessSaving = false;
             try
             {
-                using (ZubairEntities dbContext = new ZubairEntities())
+                for (int i = 0; i < files.Count; i++)
                 {
-                    var tempInvoice = await dbContext.invoices.Where(c => c.id == invoice.Id).FirstOrDefaultAsync();
-
-                    if (tempInvoice != null)
+                    HttpPostedFile httpPostedFile = files[i];
+                    if (httpPostedFile == null)
                     {
-                        tempInvoice.contractor_id = invoice.ContractorId;
-                        tempInvoice.customer_id = invoice.CustomerId;
-                        tempInvoice.invoice_status_id = invoice.InvoiceStatusId;
-                        tempInvoice.isactive = invoice.IsActive;
-                        InsertInvoiceLog(dbContext, invoice.Id, invoice.InvoiceStatusId);
+                        return (false, "Not Found");
+                    }
+                    if (httpPostedFile.FileName.ToLower().Contains("data.json"))
+                    {
+                        if (httpPostedFile.ContentLength > 0)
+                        {
+                            string str = (new StreamReader(httpPostedFile.InputStream)).ReadToEnd();
 
-                        await dbContext.SaveChangesAsync();
+                            dynamic array = JsonConvert.DeserializeObject(str);
+                            using (ZubairEntities dbContext = new ZubairEntities())
+                            {                                
+                                using (DbContextTransaction transaction = dbContext.Database.BeginTransaction())
+                                {
+                                    try
+                                    {
+                                        foreach (var item in array)
+                                        {
+                                            if (item != null)
+                                            {
+                                                int invoiceID = item.InvoiceID;
+                                                var invoice = await dbContext.invoices.Where(c => c.id == invoiceID).FirstOrDefaultAsync();
+                                                // invoice                                
+                                                if(invoice != null)
+                                                {
+                                                    invoice.contractor_id = item.ContractorId;
+                                                    invoice.customer_id = item.CustomerID;
+                                                    invoice.invoice_status_id = item.InvoiceStatusId;
+                                                    invoice.isactive = item.IsActive;
+                                                    await dbContext.SaveChangesAsync();
+                                                }
+                                                                                                
+                                                foreach (var it in item.InvoiceItem)
+                                                {
+                                                    foreach (var bt in it.BillingItem)
+                                                    {
+                                                        int billingItemId = bt.id;
+                                                        var billingItem = await dbContext.billingitems.Where(c => c.id == billingItemId).FirstOrDefaultAsync();
+                                                        // update billing item
+                                                        if(billingItem != null)
+                                                        {
+                                                            billingItem.cost = bt.cost;
+                                                            billingItem.name = bt.name;
 
-                        
-                        return (true, null);
+                                                            await dbContext.SaveChangesAsync();
+                                                        };
+
+                                                        int invoiceItemId = it.id;
+                                                        var invoiceItem = await dbContext.invoiceitems.Where(c => c.id == invoiceItemId).FirstOrDefaultAsync();
+
+                                                        // update invoice items 
+                                                        if(invoiceItem !=null)
+                                                        {
+                                                            invoiceItem.invoice_id = invoiceID;
+                                                            invoiceItem.billing_item_id = billingItemId;
+                                                            invoiceItem.discount = it.Discount;
+                                                            invoiceItem.totalcost = it.TotalCost;
+
+                                                            await dbContext.SaveChangesAsync();
+                                                        };
+                                                        
+
+                                                        foreach (var invFile in it.InvoiceFile)
+                                                        {
+                                                            int invoiceFileId = invFile.id;
+
+                                                            var invoiceFile = await dbContext.invoicefiles.Where(c => c.id == invoiceFileId).FirstOrDefaultAsync();
+                                                            // create file
+                                                            if(invoiceFile !=null)
+                                                            {
+                                                                invoiceFile.invoiceitem_id = invFile.invoiceItemId;
+                                                                invoiceFile.name = invFile.name;
+
+                                                                var fileSavePath = Path.Combine(HostingEnvironment.MapPath(ConfigurationManager.AppSettings["fileUploadFolder"]), invoiceFile.name);
+                                                                invoiceFile.filelocation = fileSavePath;
+                                                                await dbContext.SaveChangesAsync();
+                                                            };                                                            
+                                                        }                                                        
+                                                    }
+                                                }
+
+                                                InsertInvoiceLog(dbContext, invoiceID, invoice.invoice_status_id);
+                                                await dbContext.SaveChangesAsync();
+                                            }
+                                        }
+
+                                        IsSuccessSaving = true;
+                                        transaction.Commit();
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        transaction.Rollback();
+                                        throw ex;
+                                    }
+                                }
+
+                            } // end using                            
+                        }
                     }
                 }
+
+                if (IsSuccessSaving)
+                {
+                    for (int i = 0; i < files.Count; i++)
+                    {
+                        HttpPostedFile httpPostedFile = files[i];
+                        if (!httpPostedFile.FileName.ToLower().Contains("data.json"))
+                        {
+                            this.UploadFile(httpPostedFile);
+                        }
+                    }
+                    return (true, null);
+                }
+
                 return (false, "Not Found");
             }
             catch (Exception ex)
