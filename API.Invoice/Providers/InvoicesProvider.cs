@@ -93,9 +93,7 @@ namespace API.Invoice.Providers
                     {
                         if (httpPostedFile.ContentLength > 0)
                         {
-                            string str = (new StreamReader(httpPostedFile.InputStream)).ReadToEnd();
-
-                            dynamic array = JsonConvert.DeserializeObject(str);
+                            dynamic array = JsonConvert.DeserializeObject((new StreamReader(httpPostedFile.InputStream)).ReadToEnd());
                             using (ZubairEntities dbContext = new ZubairEntities())
                             {
                                 using (DbContextTransaction transaction = dbContext.Database.BeginTransaction())
@@ -122,57 +120,59 @@ namespace API.Invoice.Providers
                                                 dbContext.Entry(tempInvoice).GetDatabaseValues();
                                                 int invoiceID = tempInvoice.id;
 
-                                                foreach (var it in item.InvoiceItem)
-                                                {
-                                                    foreach (var bt in it.BillingItem)
-                                                    {
-                                                        // create billing item
-                                                        var tempBillingItem = new billingitem
-                                                        {
-                                                            cost = bt.cost,
-                                                            name = bt.name
-                                                        };
+                                                await SaveInvoiceSubData(dbContext, item, invoiceID, tempInvoice);
 
-                                                        dbContext.billingitems.Add(tempBillingItem);
-                                                        await dbContext.SaveChangesAsync();
-                                                        dbContext.Entry(tempBillingItem).GetDatabaseValues();
-                                                        int billingItemId = tempBillingItem.id;
+                                                #region "Commented"
+                                                //foreach (var it in item.InvoiceItem)
+                                                //{
+                                                //    foreach (var bt in it.BillingItem)
+                                                //    {
+                                                //        // create billing item
+                                                //        var tempBillingItem = new billingitem
+                                                //        {
+                                                //            cost = bt.cost,
+                                                //            name = bt.name
+                                                //        };
 
-                                                        // create invoice items 
-                                                        var tempInvoiceItem = new invoiceitem
-                                                        {
-                                                            invoice_id = invoiceID,
-                                                            billing_item_id = billingItemId,
-                                                            discount = it.Discount,
-                                                            totalcost = it.TotalCost
-                                                        };
+                                                //        dbContext.billingitems.Add(tempBillingItem);
+                                                //        await dbContext.SaveChangesAsync();
+                                                //        dbContext.Entry(tempBillingItem).GetDatabaseValues();
+                                                //        int billingItemId = tempBillingItem.id;
 
-                                                        dbContext.invoiceitems.Add(tempInvoiceItem);
-                                                        await dbContext.SaveChangesAsync();
-                                                        dbContext.Entry(tempInvoiceItem).GetDatabaseValues();
-                                                        int invoiceItemId = tempInvoiceItem.id;
+                                                //        // create invoice items 
+                                                //        var tempInvoiceItem = new invoiceitem
+                                                //        {
+                                                //            invoice_id = invoiceID,
+                                                //            billing_item_id = billingItemId,
+                                                //            discount = it.Discount,
+                                                //            totalcost = it.TotalCost
+                                                //        };
 
-                                                        foreach (var invFile in it.InvoiceFile)
-                                                        {
-                                                            // create file
-                                                            var tempInvoiceFile = new invoicefile
-                                                            {
-                                                                invoiceitem_id = invoiceItemId,
-                                                                name = invFile.name
-                                                            };
+                                                //        dbContext.invoiceitems.Add(tempInvoiceItem);
+                                                //        await dbContext.SaveChangesAsync();
+                                                //        dbContext.Entry(tempInvoiceItem).GetDatabaseValues();
+                                                //        int invoiceItemId = tempInvoiceItem.id;
 
-                                                            var fileSavePath = Path.Combine(HostingEnvironment.MapPath(ConfigurationManager.AppSettings["fileUploadFolder"]), tempInvoiceFile.name);
-                                                            tempInvoiceFile.filelocation = fileSavePath;
-                                                            dbContext.invoicefiles.Add(tempInvoiceFile);                                                            
-                                                        }
-                                                        await dbContext.SaveChangesAsync();
-                                                    }
-                                                }
+                                                //        foreach (var invFile in it.InvoiceFile)
+                                                //        {
+                                                //            // create file
+                                                //            var tempInvoiceFile = new invoicefile
+                                                //            {
+                                                //                invoiceitem_id = invoiceItemId,
+                                                //                name = invFile.name
+                                                //            };
 
-                                                InsertInvoiceLog(dbContext, invoiceID, tempInvoice.invoice_status_id);
+                                                //            tempInvoiceFile.filelocation = GetFilePath(tempInvoiceFile.name);
+                                                //            dbContext.invoicefiles.Add(tempInvoiceFile);                                                            
+                                                //        }
+                                                //        await dbContext.SaveChangesAsync();
+                                                //    }
+                                                //}
 
-                                                await dbContext.SaveChangesAsync();
-                                                
+                                                //InsertInvoiceLog(dbContext, invoiceID, tempInvoice.invoice_status_id);
+
+                                                //await dbContext.SaveChangesAsync();
+                                                #endregion
                                             }
                                         }
 
@@ -234,10 +234,8 @@ namespace API.Invoice.Providers
                     if (httpPostedFile.FileName.ToLower().Contains("data.json"))
                     {
                         if (httpPostedFile.ContentLength > 0)
-                        {
-                            string str = (new StreamReader(httpPostedFile.InputStream)).ReadToEnd();
-
-                            dynamic array = JsonConvert.DeserializeObject(str);
+                        {                            
+                            dynamic array = JsonConvert.DeserializeObject((new StreamReader(httpPostedFile.InputStream)).ReadToEnd());
                             using (ZubairEntities dbContext = new ZubairEntities())
                             {                                
                                 using (DbContextTransaction transaction = dbContext.Database.BeginTransaction())
@@ -248,69 +246,19 @@ namespace API.Invoice.Providers
                                         {
                                             if (item != null)
                                             {
-                                                int invoiceID = item.InvoiceID;
+                                                int invoiceID = item.id;
                                                 var invoice = await dbContext.invoices.Where(c => c.id == invoiceID).FirstOrDefaultAsync();
                                                 // invoice                                
-                                                if(invoice != null)
+                                                if (invoice != null)
                                                 {
                                                     invoice.contractor_id = item.ContractorId;
                                                     invoice.customer_id = item.CustomerID;
                                                     invoice.invoice_status_id = item.InvoiceStatusId;
                                                     invoice.isactive = item.IsActive;
                                                     await dbContext.SaveChangesAsync();
+
+                                                    await SaveInvoiceSubData(dbContext, item, invoiceID, invoice);
                                                 }
-                                                                                                
-                                                foreach (var it in item.InvoiceItem)
-                                                {
-                                                    foreach (var bt in it.BillingItem)
-                                                    {
-                                                        int billingItemId = bt.id;
-                                                        var billingItem = await dbContext.billingitems.Where(c => c.id == billingItemId).FirstOrDefaultAsync();
-                                                        // update billing item
-                                                        if(billingItem != null)
-                                                        {
-                                                            billingItem.cost = bt.cost;
-                                                            billingItem.name = bt.name;
-
-                                                            await dbContext.SaveChangesAsync();
-                                                        };
-
-                                                        int invoiceItemId = it.id;
-                                                        var invoiceItem = await dbContext.invoiceitems.Where(c => c.id == invoiceItemId).FirstOrDefaultAsync();
-
-                                                        // update invoice items 
-                                                        if(invoiceItem !=null)
-                                                        {
-                                                            invoiceItem.invoice_id = invoiceID;
-                                                            invoiceItem.billing_item_id = billingItemId;
-                                                            invoiceItem.discount = it.Discount;
-                                                            invoiceItem.totalcost = it.TotalCost;
-
-                                                            await dbContext.SaveChangesAsync();
-                                                        };
-                                                        
-
-                                                        foreach (var invFile in it.InvoiceFile)
-                                                        {
-                                                            int invoiceFileId = invFile.id;
-
-                                                            var invoiceFile = await dbContext.invoicefiles.Where(c => c.id == invoiceFileId).FirstOrDefaultAsync();
-                                                            // create file
-                                                            if(invoiceFile !=null)
-                                                            {
-                                                                invoiceFile.invoiceitem_id = invFile.invoiceItemId;
-                                                                invoiceFile.name = invFile.name;
-
-                                                                var fileSavePath = Path.Combine(HostingEnvironment.MapPath(ConfigurationManager.AppSettings["fileUploadFolder"]), invoiceFile.name);
-                                                                invoiceFile.filelocation = fileSavePath;
-                                                                await dbContext.SaveChangesAsync();
-                                                            };                                                            
-                                                        }                                                        
-                                                    }
-                                                }
-
-                                                InsertInvoiceLog(dbContext, invoiceID, invoice.invoice_status_id);
-                                                await dbContext.SaveChangesAsync();
                                             }
                                         }
 
@@ -349,6 +297,130 @@ namespace API.Invoice.Providers
                 //logger?.LogError(ex.ToString());
                 return (false, ex.Message);
             }
+        }
+
+        private async Task SaveInvoiceSubData(ZubairEntities dbContext, dynamic item, int invoiceID, invoice invoice)
+        {
+            try
+            {
+                foreach (var it in item.InvoiceItem)
+                {
+                    foreach (var bt in it.BillingItem)
+                    {
+                        int billingItemId = await SaveBillingItem(dbContext, bt);
+
+                        int invoiceItemId = 0;
+                        var invoiceItem = await dbContext.invoiceitems.Where(c => c.billing_item_id == billingItemId).FirstOrDefaultAsync();
+                        invoiceItemId = await SaveInvoiceItem(dbContext, invoiceID, it, billingItemId, invoiceItemId, invoiceItem);
+
+                        foreach (var invFile in it.InvoiceFile)
+                        {
+                            await SaveInvoiceFile(dbContext, invoiceItemId, invFile);
+                        }
+                    }
+                }
+
+                InsertInvoiceLog(dbContext, invoiceID, invoice.invoice_status_id);
+                await dbContext.SaveChangesAsync();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }            
+        }
+
+        private async Task SaveInvoiceFile(ZubairEntities dbContext, int invoiceItemId, dynamic invFile)
+        {
+            int? invoiceFileId = invFile.id;
+
+            if(invoiceFileId !=null)
+            {
+                var invoiceFile = await dbContext.invoicefiles.Where(c => c.id == invoiceFileId).FirstOrDefaultAsync();
+                // create file
+                if (invoiceFile != null)
+                {
+                    invoiceFile.invoiceitem_id = invFile.invoiceItemId;
+                    invoiceFile.name = invFile.name;
+
+                    invoiceFile.filelocation = GetFilePath(invoiceFile.name);
+                }
+            }            
+            else
+            {
+                var tempInvoiceFile = new invoicefile
+                {
+                    invoiceitem_id = invoiceItemId,
+                    name = invFile.name
+                };
+
+                tempInvoiceFile.filelocation = GetFilePath(tempInvoiceFile.name);
+                dbContext.invoicefiles.Add(tempInvoiceFile);
+            }
+            await dbContext.SaveChangesAsync();
+        }
+
+        private static async Task<int?> SaveBillingItem(ZubairEntities dbContext, dynamic bt)
+        {
+            int? billingItemId = bt.id;            
+            if(billingItemId !=null)
+            {
+                var billingItem = await dbContext.billingitems.Where(c => c.id == billingItemId).FirstOrDefaultAsync();
+                // update billing item
+                if (billingItem != null)
+                {
+                    billingItem.cost = bt.cost;
+                    billingItem.name = bt.name;
+                    await dbContext.SaveChangesAsync();
+                }
+            }            
+            else
+            {
+                // create billing item
+                var tempBillingItem = new billingitem
+                {
+                    cost = bt.cost,
+                    name = bt.name
+                };
+                dbContext.billingitems.Add(tempBillingItem);
+                await dbContext.SaveChangesAsync();
+                dbContext.Entry(tempBillingItem).GetDatabaseValues();
+                billingItemId = tempBillingItem.id;
+            }
+
+            return billingItemId;
+        }
+
+        private static async Task<int> SaveInvoiceItem(ZubairEntities dbContext, int invoiceID, dynamic it, int billingItemId, int invoiceItemId, invoiceitem invoiceItem)
+        {
+            // update invoice items 
+            if (invoiceItem != null)
+            {
+                invoiceItem.invoice_id = invoiceID;
+                invoiceItem.billing_item_id = billingItemId;
+                invoiceItem.discount = it.Discount;
+                invoiceItem.totalcost = it.TotalCost;
+                invoiceItemId = invoiceItem.id;
+                await dbContext.SaveChangesAsync();
+            }
+            else
+            {
+                // create invoice items 
+                var tempInvoiceItem = new invoiceitem
+                {
+                    invoice_id = invoiceID,
+                    billing_item_id = billingItemId,
+                    discount = it.Discount,
+                    totalcost = it.TotalCost
+                };
+
+                dbContext.invoiceitems.Add(tempInvoiceItem);
+                await dbContext.SaveChangesAsync();
+                dbContext.Entry(tempInvoiceItem).GetDatabaseValues();
+                invoiceItemId = tempInvoiceItem.id;
+            }
+
+            return invoiceItemId;
         }
 
         public async Task<(bool IsSuccess, string ErrorMessage)> DeleteInvoice(int InvoiceID)
@@ -390,6 +462,12 @@ namespace API.Invoice.Providers
 
             dbContext.invoicelogs.Add(tempInvoicelog);
         }
+
+        public string GetFilePath(string fileName)
+        {
+            return Path.Combine(HostingEnvironment.MapPath(ConfigurationManager.AppSettings["fileUploadFolder"]), fileName);
+        }
+        
 
         public async Task<(bool IsSuccess, string ErrorMessage)> UpdateInvoiceStatus(int InvoiceID, int StatusID)
         {
