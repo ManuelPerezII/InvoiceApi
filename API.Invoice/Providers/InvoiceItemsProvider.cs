@@ -115,5 +115,31 @@ namespace API.Invoice.Providers
                 return (false, ex.Message);
             }
         }
+
+        public async Task<(bool IsSuccess, IEnumerable<InvoiceItemViewModel> InvoiceItems, string ErrorMessage)> GetInvoiceItemByBillingID(int billingItemId)
+        {
+            try
+            {
+                using (ZubairEntities dbContext = new ZubairEntities())
+                {
+                    var invoiceItems = await dbContext.invoiceitems.Include("billingitem").Include("invoicefiles")
+                        .Where(c=>c.billing_item_id ==billingItemId).ToListAsync();
+
+                    if (invoiceItems != null && invoiceItems.Any())
+                    {
+                        var result = mapper.Map<IEnumerable<invoiceitem>, IEnumerable<Models.InvoiceItemViewModel>>(invoiceItems);
+
+                        return (true, result, null);
+                    }
+                }
+
+                return (false, null, "Not Found");
+            }
+            catch (Exception ex)
+            {
+                //logger?.LogError(ex.ToString());
+                return (false, null, ex.Message);
+            }
+        }
     }
 }

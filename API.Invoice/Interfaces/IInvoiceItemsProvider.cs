@@ -12,5 +12,7 @@ namespace API.Invoice.Interfaces
 
         Task<(bool IsSuccess, string ErrorMessage)> CreateInvoiceItem(Models.InvoiceItem invoiceItem);
         Task<(bool IsSuccess, string ErrorMessage)> UpdateInvoiceItem(Models.InvoiceItem invoiceItem);
+
+        Task<(bool IsSuccess, IEnumerable<Models.InvoiceItemViewModel> InvoiceItems, string ErrorMessage)> GetInvoiceItemByBillingID(int billingItemId);
     }
 }

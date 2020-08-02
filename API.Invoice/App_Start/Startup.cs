@@ -59,6 +59,8 @@ namespace API.Invoice.App_Start
                 defaults: new { id = RouteParameter.Optional }
             );
 
+
+
             //var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
 
             ConfigureJwt(app);

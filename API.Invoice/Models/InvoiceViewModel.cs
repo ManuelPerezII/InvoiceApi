@@ -23,9 +23,9 @@ namespace API.Invoice.Models
 
         public Customer Customer { get; set; }
 
-        public Contractor contractor { get; set; }
+        public Contractor Contractor { get; set; }
 
-        public InvoiceStatus invoiceStatu { get; set; }
+        public InvoiceStatus InvoiceStatu { get; set; }
 
         public List<InvoiceItemViewModel> InvoiceItems { get;set;}
         //public List<InvoiceItem> InvoiceItems { get; set; }

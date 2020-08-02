@@ -54,6 +54,19 @@ namespace API.Invoice.Controllers
                 return Ok();
             }
             return BadRequest(ErrorMessage);
-        }        
+        }
+
+
+        [Route("GetInvoiceItemByBillingID/{id}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetInvoiceItemByBillingID(int id)
+        {
+            var (IsSuccess, InvoiceItems, ErrorMessage) = await invoiceItemsProvider.GetInvoiceItemByBillingID(id);
+            if (IsSuccess)
+            {
+                return Json(InvoiceItems);
+            }
+            return BadRequest(ErrorMessage);
+        }
     }
 }
