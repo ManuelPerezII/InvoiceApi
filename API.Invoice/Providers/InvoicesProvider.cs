@@ -58,7 +58,7 @@ namespace API.Invoice.Providers
                 using (ZubairEntities dbContext = new ZubairEntities())
                 {
                     var invoices = await dbContext.invoices.Include("contractor").Include("customer").Include("invoicestatu")
-                               .Include("invoiceitems").Include("invoiceitems.billingitem").ToListAsync();
+                               .Include("invoiceitems").Include("invoiceitems.billingitem").Include("invoiceitems.invoicefiles").ToListAsync();
 
                     if (invoices != null && invoices.Any())
                     {

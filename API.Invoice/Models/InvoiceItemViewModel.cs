@@ -18,5 +18,7 @@ namespace API.Invoice.Models
         public decimal TotalCost { get; set; }
 
         public BillingItem BillingItem { get; set; }
+
+        public List<Models.InvoiceFile> InvoiceFiles { get; set; }
     }
 }
