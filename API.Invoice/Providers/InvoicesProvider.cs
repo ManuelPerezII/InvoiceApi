@@ -309,7 +309,7 @@ namespace API.Invoice.Providers
                     {
                         int billingItemId = await SaveBillingItem(dbContext, bt);
 
-                        int invoiceItemId = 0;
+                        Guid invoiceItemId = new Guid();
                         var invoiceItem = await dbContext.invoiceitems.Where(c => c.billing_item_id == billingItemId).FirstOrDefaultAsync();
                         invoiceItemId = await SaveInvoiceItem(dbContext, invoiceID, it, billingItemId, invoiceItemId, invoiceItem);
 
@@ -330,7 +330,7 @@ namespace API.Invoice.Providers
             }            
         }
 
-        private async Task SaveInvoiceFile(ZubairEntities dbContext, int invoiceItemId, dynamic invFile)
+        private async Task SaveInvoiceFile(ZubairEntities dbContext, Guid invoiceItemId, dynamic invFile)
         {
             int? invoiceFileId = invFile.id;
 
@@ -340,7 +340,7 @@ namespace API.Invoice.Providers
                 // create file
                 if (invoiceFile != null)
                 {
-                    invoiceFile.invoiceitem_id = invFile.invoiceItemId;
+                    invoiceFile.invoice_item_id = invFile.invoiceItemId;
                     invoiceFile.name = invFile.name;
 
                     invoiceFile.filelocation = GetFilePath(invoiceFile.name);
@@ -350,7 +350,7 @@ namespace API.Invoice.Providers
             {
                 var tempInvoiceFile = new invoicefile
                 {
-                    invoiceitem_id = invoiceItemId,
+                    invoice_item_id = invoiceItemId,
                     name = invFile.name
                 };
 
@@ -391,7 +391,7 @@ namespace API.Invoice.Providers
             return billingItemId;
         }
 
-        private static async Task<int> SaveInvoiceItem(ZubairEntities dbContext, int invoiceID, dynamic it, int billingItemId, int invoiceItemId, invoiceitem invoiceItem)
+        private static async Task<Guid> SaveInvoiceItem(ZubairEntities dbContext, int invoiceID, dynamic it, int billingItemId, Guid invoiceItemId, invoiceitem invoiceItem)
         {
             // update invoice items 
             if (invoiceItem != null)
@@ -408,6 +408,7 @@ namespace API.Invoice.Providers
                 // create invoice items 
                 var tempInvoiceItem = new invoiceitem
                 {
+                    id = new Guid(),
                     invoice_id = invoiceID,
                     billing_item_id = billingItemId,
                     discount = it.Discount,

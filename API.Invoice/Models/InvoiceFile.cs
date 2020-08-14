@@ -9,7 +9,7 @@ namespace API.Invoice.Models
     {
         public int Id { get; set; }
 
-        public int InvoiceItemId { get; set; }
+        public Guid InvoiceItemId { get; set; }
 
         public string Name { get; set; }
 

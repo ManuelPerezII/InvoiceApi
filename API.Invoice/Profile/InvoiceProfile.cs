@@ -14,7 +14,7 @@ namespace API.Invoice.Profile
                 .ForMember(inv => inv.InvoiceStatusId, map => map.MapFrom(c => c.invoice_status_id))
                 .ForMember(inv => inv.CustomerId, map => map.MapFrom(c => c.customer_id))
                 .ForMember(inv => inv.ContractorId, map => map.MapFrom(c => c.contractor_id))                
-                .ForMember(inv => inv.InvoiceItems, map => map.MapFrom(c => c.invoiceitems)).ReverseMap();
+                .ForMember(inv => inv.InvoiceItems, map => map.MapFrom(c => c.work_id)).ReverseMap();
             CreateMap<contractor, Models.Contractor>();
             CreateMap<customer, Models.Customer>();
             CreateMap<invoicestatu, Models.InvoiceStatus>();

@@ -20,7 +20,7 @@ namespace API.Invoice.Providers
                     if (invoiceFile != null)
                     {
                         var tempInvoiceFile = new invoicefile();
-                        tempInvoiceFile.invoiceitem_id = invoiceFile.InvoiceItemId;
+                        tempInvoiceFile.invoice_item_id = invoiceFile.InvoiceItemId;
                         tempInvoiceFile.name = invoiceFile.Name;
                         tempInvoiceFile.filelocation = invoiceFile.FileLocation;
                         dbContext.invoicefiles.Add(tempInvoiceFile);

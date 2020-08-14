@@ -1,82 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="ZubairModelStoreContainer" CdmEntityContainer="ZubairEntities">
-    <EntitySetMapping Name="billingitems">
-      <EntityTypeMapping TypeName="ZubairModel.billingitem">
-        <MappingFragment StoreEntitySet="billingitem">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="cost" ColumnName="cost" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="contractors">
-      <EntityTypeMapping TypeName="ZubairModel.contractor">
-        <MappingFragment StoreEntitySet="contractor">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="name" ColumnName="name" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="customers">
-      <EntityTypeMapping TypeName="ZubairModel.customer">
-        <MappingFragment StoreEntitySet="customer">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="name" ColumnName="name" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="invoices">
-      <EntityTypeMapping TypeName="ZubairModel.invoice">
-        <MappingFragment StoreEntitySet="invoice">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="customer_id" ColumnName="customer_id" />
-          <ScalarProperty Name="invoice_status_id" ColumnName="invoice_status_id" />
-          <ScalarProperty Name="contractor_id" ColumnName="contractor_id" />
-          <ScalarProperty Name="creationdate" ColumnName="creationdate" />
-          <ScalarProperty Name="isactive" ColumnName="isactive" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="invoicefiles">
-      <EntityTypeMapping TypeName="ZubairModel.invoicefile">
-        <MappingFragment StoreEntitySet="invoicefile">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="invoiceitem_id" ColumnName="invoiceitem_id" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="filelocation" ColumnName="filelocation" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="invoiceitems">
-      <EntityTypeMapping TypeName="ZubairModel.invoiceitem">
-        <MappingFragment StoreEntitySet="invoiceitem">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="invoice_id" ColumnName="invoice_id" />
-          <ScalarProperty Name="billing_item_id" ColumnName="billing_item_id" />
-          <ScalarProperty Name="discount" ColumnName="discount" />
-          <ScalarProperty Name="totalcost" ColumnName="totalcost" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="invoicelogs">
-      <EntityTypeMapping TypeName="ZubairModel.invoicelog">
-        <MappingFragment StoreEntitySet="invoicelog">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="invoice_id" ColumnName="invoice_id" />
-          <ScalarProperty Name="invoicestatusid" ColumnName="invoicestatusid" />
-          <ScalarProperty Name="datecreated" ColumnName="datecreated" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="invoicestatus">
-      <EntityTypeMapping TypeName="ZubairModel.invoicestatu">
-        <MappingFragment StoreEntitySet="invoicestatus">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="name" ColumnName="name" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="sysdiagrams">
       <EntityTypeMapping TypeName="ZubairModel.sysdiagram">
         <MappingFragment StoreEntitySet="sysdiagrams">
@@ -95,6 +19,84 @@
           <ScalarProperty Name="AppSecret" ColumnName="AppSecret" />
           <ScalarProperty Name="AppToken" ColumnName="AppToken" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="billingitems">
+      <EntityTypeMapping TypeName="ZubairModel.billingitem">
+        <MappingFragment StoreEntitySet="billingitem">
+          <ScalarProperty Name="cost" ColumnName="cost" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="contractors">
+      <EntityTypeMapping TypeName="ZubairModel.contractor">
+        <MappingFragment StoreEntitySet="contractor">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="customers">
+      <EntityTypeMapping TypeName="ZubairModel.customer">
+        <MappingFragment StoreEntitySet="customer">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="invoices">
+      <EntityTypeMapping TypeName="ZubairModel.invoice">
+        <MappingFragment StoreEntitySet="invoice">
+          <ScalarProperty Name="work_id" ColumnName="work_id" />
+          <ScalarProperty Name="contractor_id" ColumnName="contractor_id" />
+          <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+          <ScalarProperty Name="isactive" ColumnName="isactive" />
+          <ScalarProperty Name="creationdate" ColumnName="creationdate" />
+          <ScalarProperty Name="invoice_status_id" ColumnName="invoice_status_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="invoicefiles">
+      <EntityTypeMapping TypeName="ZubairModel.invoicefile">
+        <MappingFragment StoreEntitySet="invoicefile">
+          <ScalarProperty Name="invoice_item_id" ColumnName="invoice_item_id" />
+          <ScalarProperty Name="filelocation" ColumnName="filelocation" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="invoiceitems">
+      <EntityTypeMapping TypeName="ZubairModel.invoiceitem">
+        <MappingFragment StoreEntitySet="invoiceitem">
+          <ScalarProperty Name="taxes" ColumnName="taxes" />
+          <ScalarProperty Name="totalcost" ColumnName="totalcost" />
+          <ScalarProperty Name="discount" ColumnName="discount" />
+          <ScalarProperty Name="billing_item_id" ColumnName="billing_item_id" />
+          <ScalarProperty Name="invoice_id" ColumnName="invoice_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="invoicelogs">
+      <EntityTypeMapping TypeName="ZubairModel.invoicelog">
+        <MappingFragment StoreEntitySet="invoicelog">
+          <ScalarProperty Name="datecreated" ColumnName="datecreated" />
+          <ScalarProperty Name="invoicestatusid" ColumnName="invoicestatusid" />
+          <ScalarProperty Name="invoice_id" ColumnName="invoice_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="invoicestatus">
+      <EntityTypeMapping TypeName="ZubairModel.invoicestatu">
+        <MappingFragment StoreEntitySet="invoicestatus">
+          <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>

@@ -20,7 +20,7 @@ namespace API.Invoice.DB
             this.invoices = new HashSet<invoice>();
         }
     
-        public int id { get; set; }
+        public System.Guid id { get; set; }
         public string name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

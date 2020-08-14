@@ -5,24 +5,24 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="42d54eaf21bf46bf9d4d783066c21653" Name="Diagram1">
-        <EntityTypeShape EntityType="ZubairModel.billingitem" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ZubairModel.contractor" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ZubairModel.customer" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ZubairModel.invoice" Width="1.5" PointX="3" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ZubairModel.invoicefile" Width="1.5" PointX="7.5" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ZubairModel.invoiceitem" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ZubairModel.invoicelog" Width="1.5" PointX="8.25" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ZubairModel.invoicestatu" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ZubairModel.sysdiagram" Width="1.5" PointX="5.75" PointY="9.625" IsExpanded="true" />
-        <AssociationConnector Association="ZubairModel.FK_invoiceitem_billingitem" ManuallyRouted="false" />
-        <AssociationConnector Association="ZubairModel.FK_invoice_contractor" ManuallyRouted="false" />
-        <AssociationConnector Association="ZubairModel.FK_invoice_customer" ManuallyRouted="false" />
-        <AssociationConnector Association="ZubairModel.FK_invoice_invoicestatus" ManuallyRouted="false" />
-        <AssociationConnector Association="ZubairModel.FK_invoiceitem_invoice" ManuallyRouted="false" />
-        <AssociationConnector Association="ZubairModel.FK_invoicelog_invoice" ManuallyRouted="false" />
-        <AssociationConnector Association="ZubairModel.FK_invoicefile_invoiceitem" ManuallyRouted="false" />
-        <AssociationConnector Association="ZubairModel.FK_invoicelog_invoicestatus" ManuallyRouted="false" />
         <EntityTypeShape EntityType="ZubairModel.authorizedapp" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ZubairModel.billingitem" Width="1.5" PointX="1.5" PointY="15.125" />
+        <EntityTypeShape EntityType="ZubairModel.contractor" Width="1.5" PointX="0.75" PointY="1.875" />
+        <EntityTypeShape EntityType="ZubairModel.customer" Width="1.5" PointX="0.75" PointY="8.25" />
+        <EntityTypeShape EntityType="ZubairModel.invoice" Width="1.5" PointX="3" PointY="4" />
+        <EntityTypeShape EntityType="ZubairModel.invoicefile" Width="1.5" PointX="3" PointY="11" />
+        <EntityTypeShape EntityType="ZubairModel.invoiceitem" Width="1.5" PointX="0.75" PointY="10.625" />
+        <EntityTypeShape EntityType="ZubairModel.invoicelog" Width="1.5" PointX="5.25" PointY="4.625" />
+        <EntityTypeShape EntityType="ZubairModel.invoicestatu" Width="1.5" PointX="0.75" PointY="4.75" />
+        <AssociationConnector Association="ZubairModel.FK_invoiceitem_billingitem" />
+        <AssociationConnector Association="ZubairModel.FK_invoice_contractor" />
+        <AssociationConnector Association="ZubairModel.FK_invoice_customer" />
+        <AssociationConnector Association="ZubairModel.FK_invoice_invoiceitem" />
+        <AssociationConnector Association="ZubairModel.FK_invoice_invoicestatus" />
+        <AssociationConnector Association="ZubairModel.FK_invoicelog_invoice" />
+        <AssociationConnector Association="ZubairModel.FK_invoicefile_invoiceitem" />
+        <AssociationConnector Association="ZubairModel.FK_invoicelog_invoicestatus" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

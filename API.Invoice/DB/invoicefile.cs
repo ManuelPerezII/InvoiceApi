@@ -15,9 +15,9 @@ namespace API.Invoice.DB
     public partial class invoicefile
     {
         public int id { get; set; }
-        public Nullable<int> invoiceitem_id { get; set; }
         public string name { get; set; }
         public string filelocation { get; set; }
+        public Nullable<System.Guid> invoice_item_id { get; set; }
     
         public virtual invoiceitem invoiceitem { get; set; }
     }

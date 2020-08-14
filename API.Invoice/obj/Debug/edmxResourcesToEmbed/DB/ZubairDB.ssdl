@@ -22,14 +22,14 @@
     <Key>
       <PropertyRef Name="id" />
     </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="name" Type="nchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="customer">
     <Key>
       <PropertyRef Name="id" />
     </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="name" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="invoice">
@@ -37,30 +37,32 @@
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="customer_id" Type="int" />
     <Property Name="invoice_status_id" Type="int" />
-    <Property Name="contractor_id" Type="int" />
     <Property Name="creationdate" Type="datetime" />
     <Property Name="isactive" Type="bit" />
+    <Property Name="customer_id" Type="uniqueidentifier" />
+    <Property Name="contractor_id" Type="uniqueidentifier" />
+    <Property Name="work_id" Type="uniqueidentifier" />
   </EntityType>
   <EntityType Name="invoicefile">
     <Key>
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="invoiceitem_id" Type="int" />
     <Property Name="name" Type="nvarchar" MaxLength="50" />
-    <Property Name="filelocation" Type="nvarchar" MaxLength="50" />
+    <Property Name="filelocation" Type="nvarchar" MaxLength="500" />
+    <Property Name="invoice_item_id" Type="uniqueidentifier" />
   </EntityType>
   <EntityType Name="invoiceitem">
     <Key>
       <PropertyRef Name="id" />
     </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id" Type="uniqueidentifier" Nullable="false" />
     <Property Name="invoice_id" Type="int" />
     <Property Name="billing_item_id" Type="int" />
     <Property Name="discount" Type="decimal" Precision="18" Scale="0" />
     <Property Name="totalcost" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="taxes" Type="decimal" Precision="18" Scale="0" />
   </EntityType>
   <EntityType Name="invoicelog">
     <Key>
@@ -112,6 +114,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_invoice_invoiceitem">
+    <End Role="invoiceitem" Type="Self.invoiceitem" Multiplicity="0..1" />
+    <End Role="invoice" Type="Self.invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="invoiceitem">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="invoice">
+        <PropertyRef Name="work_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_invoice_invoicestatus">
     <End Role="invoicestatus" Type="Self.invoicestatus" Multiplicity="0..1" />
     <End Role="invoice" Type="Self.invoice" Multiplicity="*" />
@@ -132,7 +146,7 @@
         <PropertyRef Name="id" />
       </Principal>
       <Dependent Role="invoicefile">
-        <PropertyRef Name="invoiceitem_id" />
+        <PropertyRef Name="invoice_item_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -145,18 +159,6 @@
       </Principal>
       <Dependent Role="invoiceitem">
         <PropertyRef Name="billing_item_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_invoiceitem_invoice">
-    <End Role="invoice" Type="Self.invoice" Multiplicity="0..1" />
-    <End Role="invoiceitem" Type="Self.invoiceitem" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="invoice">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="invoiceitem">
-        <PropertyRef Name="invoice_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -203,6 +205,10 @@
       <End Role="customer" EntitySet="customer" />
       <End Role="invoice" EntitySet="invoice" />
     </AssociationSet>
+    <AssociationSet Name="FK_invoice_invoiceitem" Association="Self.FK_invoice_invoiceitem">
+      <End Role="invoiceitem" EntitySet="invoiceitem" />
+      <End Role="invoice" EntitySet="invoice" />
+    </AssociationSet>
     <AssociationSet Name="FK_invoice_invoicestatus" Association="Self.FK_invoice_invoicestatus">
       <End Role="invoicestatus" EntitySet="invoicestatus" />
       <End Role="invoice" EntitySet="invoice" />
@@ -213,10 +219,6 @@
     </AssociationSet>
     <AssociationSet Name="FK_invoiceitem_billingitem" Association="Self.FK_invoiceitem_billingitem">
       <End Role="billingitem" EntitySet="billingitem" />
-      <End Role="invoiceitem" EntitySet="invoiceitem" />
-    </AssociationSet>
-    <AssociationSet Name="FK_invoiceitem_invoice" Association="Self.FK_invoiceitem_invoice">
-      <End Role="invoice" EntitySet="invoice" />
       <End Role="invoiceitem" EntitySet="invoiceitem" />
     </AssociationSet>
     <AssociationSet Name="FK_invoicelog_invoice" Association="Self.FK_invoicelog_invoice">

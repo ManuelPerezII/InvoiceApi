@@ -25,6 +25,8 @@ namespace API.Invoice.DB
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<authorizedapp> authorizedapps { get; set; }
         public virtual DbSet<billingitem> billingitems { get; set; }
         public virtual DbSet<contractor> contractors { get; set; }
         public virtual DbSet<customer> customers { get; set; }
@@ -33,7 +35,5 @@ namespace API.Invoice.DB
         public virtual DbSet<invoiceitem> invoiceitems { get; set; }
         public virtual DbSet<invoicelog> invoicelogs { get; set; }
         public virtual DbSet<invoicestatu> invoicestatus { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<authorizedapp> authorizedapps { get; set; }
     }
 }

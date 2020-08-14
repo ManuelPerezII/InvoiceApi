@@ -17,22 +17,21 @@ namespace API.Invoice.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public invoice()
         {
-            this.invoiceitems = new HashSet<invoiceitem>();
             this.invoicelogs = new HashSet<invoicelog>();
         }
     
         public int id { get; set; }
-        public Nullable<int> customer_id { get; set; }
         public Nullable<int> invoice_status_id { get; set; }
-        public Nullable<int> contractor_id { get; set; }
         public Nullable<System.DateTime> creationdate { get; set; }
         public Nullable<bool> isactive { get; set; }
+        public Nullable<System.Guid> customer_id { get; set; }
+        public Nullable<System.Guid> contractor_id { get; set; }
+        public Nullable<System.Guid> work_id { get; set; }
     
         public virtual contractor contractor { get; set; }
         public virtual customer customer { get; set; }
+        public virtual invoiceitem invoiceitem { get; set; }
         public virtual invoicestatu invoicestatu { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<invoiceitem> invoiceitems { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<invoicelog> invoicelogs { get; set; }
     }
