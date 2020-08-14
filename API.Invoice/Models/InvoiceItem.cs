@@ -16,5 +16,7 @@ namespace API.Invoice.Models
         public decimal Discount { get; set; }
 
         public decimal TotalCost { get; set; }
+
+        public decimal Taxes { get; set; }
     }
 }

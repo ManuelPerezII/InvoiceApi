@@ -11,11 +11,13 @@ namespace API.Invoice.Models
         [Key]
         public int Id { get; set; }
 
-        public int CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
 
         public int InvoiceStatusId { get; set; }
 
-        public int ContractorId { get; set; }
+        public Guid ContractorId { get; set; }
+
+        public Guid WorkId { get; set; }
 
         public DateTime CreationDate { get; set; }
 

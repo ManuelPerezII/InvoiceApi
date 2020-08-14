@@ -309,7 +309,7 @@ namespace API.Invoice.Providers
                     {
                         int billingItemId = await SaveBillingItem(dbContext, bt);
 
-                        Guid invoiceItemId = new Guid();
+                        Guid invoiceItemId = Guid.Empty;
                         var invoiceItem = await dbContext.invoiceitems.Where(c => c.billing_item_id == billingItemId).FirstOrDefaultAsync();
                         invoiceItemId = await SaveInvoiceItem(dbContext, invoiceID, it, billingItemId, invoiceItemId, invoiceItem);
 
