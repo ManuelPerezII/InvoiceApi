@@ -41,7 +41,31 @@ namespace API.Invoice.Controllers
             }
             return BadRequest(ErrorMessage);            
         }
-        
+
+        [Route("GetInvoicesByCustomerId/{id}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetInvoicesByCustomerId(Guid id)
+        {
+            var (IsSuccess, Invoices, ErrorMessage) = await invoicesProvider.GetInvoicesByCustomerId(id);
+            if (IsSuccess)
+            {
+                return Json(Invoices);
+            }
+            return BadRequest(ErrorMessage);
+        }
+
+        [Route("GetInvoicesByContractorId/{id}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetInvoicesByContractorId(Guid id)
+        {
+            var (IsSuccess, Invoices, ErrorMessage) = await invoicesProvider.GetInvoicesByContractorId(id);
+            if (IsSuccess)
+            {
+                return Json(Invoices);
+            }
+            return BadRequest(ErrorMessage);
+        }
+
         [Route("CreateInvoice")]        
         [HttpPost]
         public async Task<IHttpActionResult> CreateInvoice()

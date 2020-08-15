@@ -10,6 +10,11 @@ namespace API.Invoice.Interfaces
     public interface IInvoicesProvider
     {
         Task<(bool IsSuccess, IEnumerable<Models.InvoiceViewModel> Invoices, string ErrorMessage)> GetInvoicesAsync();
+
+        Task<(bool IsSuccess, IEnumerable<Models.InvoiceViewModel> Invoices, string ErrorMessage)> GetInvoicesByCustomerId(Guid customerId);
+
+        Task<(bool IsSuccess, IEnumerable<Models.InvoiceViewModel> Invoices, string ErrorMessage)> GetInvoicesByContractorId(Guid contractorId);
+
         Task<(bool IsSuccess, string ErrorMessage)> CreateInvoice(HttpFileCollection files);        
         Task<(bool IsSuccess, string ErrorMessage)> UpdateInvoice(HttpFileCollection files);
 

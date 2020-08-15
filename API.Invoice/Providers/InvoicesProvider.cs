@@ -77,6 +77,60 @@ namespace API.Invoice.Providers
             }
         }
 
+        public async Task<(bool IsSuccess, IEnumerable<Models.InvoiceViewModel> Invoices, string ErrorMessage)> GetInvoicesByCustomerId(Guid customerId)
+        {
+            try
+            {
+                using (ZubairEntities dbContext = new ZubairEntities())
+                {
+                    var invoices = await dbContext.invoices.Where(c => c.customer_id == customerId).Include("contractor")
+                        .Include("customer").Include("invoicestatu").Include("invoiceitems").Include("invoiceitems.billingitem")
+                        .Include("invoiceitems.invoicefiles").ToListAsync();
+
+                    if (invoices != null && invoices.Any())
+                    {
+                        var result = mapper.Map<IEnumerable<invoice>, IEnumerable<Models.InvoiceViewModel>>(invoices);
+
+                        return (true, result, null);
+                    }
+                }
+
+                return (false, null, "Not Found");
+            }
+            catch (Exception ex)
+            {
+                //logger?.LogError(ex.ToString());
+                return (false, null, ex.Message);
+            }
+        }
+
+        public async Task<(bool IsSuccess, IEnumerable<Models.InvoiceViewModel> Invoices, string ErrorMessage)> GetInvoicesByContractorId(Guid contractorId)
+        {
+            try
+            {
+                using (ZubairEntities dbContext = new ZubairEntities())
+                {
+                    var invoices = await dbContext.invoices.Where(c=> c.contractor_id == contractorId).Include("contractor")
+                        .Include("customer").Include("invoicestatu").Include("invoiceitems").Include("invoiceitems.billingitem")
+                        .Include("invoiceitems.invoicefiles").ToListAsync();
+
+                    if (invoices != null && invoices.Any())
+                    {
+                        var result = mapper.Map<IEnumerable<invoice>, IEnumerable<Models.InvoiceViewModel>>(invoices);
+
+                        return (true, result, null);
+                    }
+                }
+
+                return (false, null, "Not Found");
+            }
+            catch (Exception ex)
+            {
+                //logger?.LogError(ex.ToString());
+                return (false, null, ex.Message);
+            }
+        }
+
         public async Task<(bool IsSuccess, string ErrorMessage)> CreateInvoice(HttpFileCollection files)
         {
             bool IsSuccessSaving = false;
