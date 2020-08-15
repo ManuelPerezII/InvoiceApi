@@ -30,10 +30,10 @@ namespace API.Invoice.DB
         public virtual DbSet<billingitem> billingitems { get; set; }
         public virtual DbSet<contractor> contractors { get; set; }
         public virtual DbSet<customer> customers { get; set; }
-        public virtual DbSet<invoice> invoices { get; set; }
         public virtual DbSet<invoicefile> invoicefiles { get; set; }
-        public virtual DbSet<invoiceitem> invoiceitems { get; set; }
         public virtual DbSet<invoicelog> invoicelogs { get; set; }
         public virtual DbSet<invoicestatu> invoicestatus { get; set; }
+        public virtual DbSet<invoice> invoices { get; set; }
+        public virtual DbSet<invoiceitem> invoiceitems { get; set; }
     }
 }

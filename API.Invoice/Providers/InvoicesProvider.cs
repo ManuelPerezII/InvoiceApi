@@ -400,6 +400,7 @@ namespace API.Invoice.Providers
                 invoiceItem.billing_item_id = billingItemId;
                 invoiceItem.discount = it.Discount;
                 invoiceItem.totalcost = it.TotalCost;
+                invoiceItem.taxes = it.Taxes;
                 invoiceItemId = invoiceItem.id;
                 await dbContext.SaveChangesAsync();
             }
@@ -408,7 +409,7 @@ namespace API.Invoice.Providers
                 // create invoice items 
                 var tempInvoiceItem = new invoiceitem
                 {
-                    id = new Guid(),
+                    id = Guid.NewGuid(),
                     invoice_id = invoiceID,
                     billing_item_id = billingItemId,
                     discount = it.Discount,

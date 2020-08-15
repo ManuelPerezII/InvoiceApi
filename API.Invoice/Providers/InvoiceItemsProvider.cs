@@ -68,7 +68,7 @@ namespace API.Invoice.Providers
                     if (invoiceItem != null)
                     {
                         var tempInvoiceItem = new invoiceitem();
-                        tempInvoiceItem.id = new Guid();
+                        tempInvoiceItem.id = Guid.NewGuid();
                         tempInvoiceItem.invoice_id = invoiceItem.InvoiceId;
                         tempInvoiceItem.billing_item_id = invoiceItem.BillingItemId;
                         tempInvoiceItem.discount = invoiceItem.Discount;

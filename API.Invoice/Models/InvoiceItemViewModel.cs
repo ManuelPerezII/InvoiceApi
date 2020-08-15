@@ -7,7 +7,7 @@ namespace API.Invoice.Models
 {
     public class InvoiceItemViewModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public int InvoiceId { get; set; }
 

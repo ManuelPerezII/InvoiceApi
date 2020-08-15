@@ -17,7 +17,6 @@ namespace API.Invoice.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public invoiceitem()
         {
-            this.invoices = new HashSet<invoice>();
             this.invoicefiles = new HashSet<invoicefile>();
         }
     
@@ -29,8 +28,7 @@ namespace API.Invoice.DB
         public Nullable<decimal> taxes { get; set; }
     
         public virtual billingitem billingitem { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<invoice> invoices { get; set; }
+        public virtual invoice invoice { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<invoicefile> invoicefiles { get; set; }
     }

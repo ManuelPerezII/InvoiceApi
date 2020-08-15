@@ -16,9 +16,7 @@ namespace API.Invoice.Models
         public int InvoiceStatusId { get; set; }
 
         public Guid ContractorId { get; set; }
-
-        public Guid WorkId { get; set; }
-
+        
         public DateTime CreationDate { get; set; }
 
         public bool IsActive { get; set; }

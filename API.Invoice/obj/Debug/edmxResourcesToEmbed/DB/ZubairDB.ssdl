@@ -42,7 +42,6 @@
     <Property Name="isactive" Type="bit" />
     <Property Name="customer_id" Type="uniqueidentifier" />
     <Property Name="contractor_id" Type="uniqueidentifier" />
-    <Property Name="work_id" Type="uniqueidentifier" />
   </EntityType>
   <EntityType Name="invoicefile">
     <Key>
@@ -114,18 +113,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_invoice_invoiceitem">
-    <End Role="invoiceitem" Type="Self.invoiceitem" Multiplicity="0..1" />
-    <End Role="invoice" Type="Self.invoice" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="invoiceitem">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="invoice">
-        <PropertyRef Name="work_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_invoice_invoicestatus">
     <End Role="invoicestatus" Type="Self.invoicestatus" Multiplicity="0..1" />
     <End Role="invoice" Type="Self.invoice" Multiplicity="*" />
@@ -159,6 +146,18 @@
       </Principal>
       <Dependent Role="invoiceitem">
         <PropertyRef Name="billing_item_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_invoiceitem_invoice">
+    <End Role="invoice" Type="Self.invoice" Multiplicity="0..1" />
+    <End Role="invoiceitem" Type="Self.invoiceitem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="invoice">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="invoiceitem">
+        <PropertyRef Name="invoice_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -205,10 +204,6 @@
       <End Role="customer" EntitySet="customer" />
       <End Role="invoice" EntitySet="invoice" />
     </AssociationSet>
-    <AssociationSet Name="FK_invoice_invoiceitem" Association="Self.FK_invoice_invoiceitem">
-      <End Role="invoiceitem" EntitySet="invoiceitem" />
-      <End Role="invoice" EntitySet="invoice" />
-    </AssociationSet>
     <AssociationSet Name="FK_invoice_invoicestatus" Association="Self.FK_invoice_invoicestatus">
       <End Role="invoicestatus" EntitySet="invoicestatus" />
       <End Role="invoice" EntitySet="invoice" />
@@ -219,6 +214,10 @@
     </AssociationSet>
     <AssociationSet Name="FK_invoiceitem_billingitem" Association="Self.FK_invoiceitem_billingitem">
       <End Role="billingitem" EntitySet="billingitem" />
+      <End Role="invoiceitem" EntitySet="invoiceitem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_invoiceitem_invoice" Association="Self.FK_invoiceitem_invoice">
+      <End Role="invoice" EntitySet="invoice" />
       <End Role="invoiceitem" EntitySet="invoiceitem" />
     </AssociationSet>
     <AssociationSet Name="FK_invoicelog_invoice" Association="Self.FK_invoicelog_invoice">

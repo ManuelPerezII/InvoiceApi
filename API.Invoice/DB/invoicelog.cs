@@ -19,7 +19,7 @@ namespace API.Invoice.DB
         public Nullable<int> invoicestatusid { get; set; }
         public Nullable<System.DateTime> datecreated { get; set; }
     
-        public virtual invoice invoice { get; set; }
         public virtual invoicestatu invoicestatu { get; set; }
+        public virtual invoice invoice { get; set; }
     }
 }

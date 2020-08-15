@@ -10,19 +10,19 @@
         <EntityTypeShape EntityType="ZubairModel.billingitem" Width="1.5" PointX="1.5" PointY="15.125" />
         <EntityTypeShape EntityType="ZubairModel.contractor" Width="1.5" PointX="0.75" PointY="1.875" />
         <EntityTypeShape EntityType="ZubairModel.customer" Width="1.5" PointX="0.75" PointY="8.25" />
-        <EntityTypeShape EntityType="ZubairModel.invoice" Width="1.5" PointX="3" PointY="4" />
         <EntityTypeShape EntityType="ZubairModel.invoicefile" Width="1.5" PointX="3" PointY="11" />
-        <EntityTypeShape EntityType="ZubairModel.invoiceitem" Width="1.5" PointX="0.75" PointY="10.625" />
         <EntityTypeShape EntityType="ZubairModel.invoicelog" Width="1.5" PointX="5.25" PointY="4.625" />
         <EntityTypeShape EntityType="ZubairModel.invoicestatu" Width="1.5" PointX="0.75" PointY="4.75" />
+        <AssociationConnector Association="ZubairModel.FK_invoicelog_invoicestatus" />
+        <EntityTypeShape EntityType="ZubairModel.invoice" Width="1.5" PointX="3" PointY="4.25" />
+        <EntityTypeShape EntityType="ZubairModel.invoiceitem" Width="1.5" PointX="8.25" PointY="9.25" />
         <AssociationConnector Association="ZubairModel.FK_invoiceitem_billingitem" />
         <AssociationConnector Association="ZubairModel.FK_invoice_contractor" />
         <AssociationConnector Association="ZubairModel.FK_invoice_customer" />
-        <AssociationConnector Association="ZubairModel.FK_invoice_invoiceitem" />
         <AssociationConnector Association="ZubairModel.FK_invoice_invoicestatus" />
+        <AssociationConnector Association="ZubairModel.FK_invoiceitem_invoice" />
         <AssociationConnector Association="ZubairModel.FK_invoicelog_invoice" />
         <AssociationConnector Association="ZubairModel.FK_invoicefile_invoiceitem" />
-        <AssociationConnector Association="ZubairModel.FK_invoicelog_invoicestatus" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
