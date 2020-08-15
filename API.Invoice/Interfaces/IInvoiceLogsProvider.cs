@@ -9,5 +9,7 @@ namespace API.Invoice.Interfaces
     public interface IInvoiceLogsProvider
     {
         Task<(bool IsSuccess, string ErrorMessage)> CreateInvoiceLog(Models.InvoiceLog invoiceLog);
+
+        Task<(bool IsSuccess, IEnumerable<Models.InvoiceLog> InvoiceItems, string ErrorMessage)> GetInvoiceLogsByInvoiceId(int invoiceId);
     }
 }   

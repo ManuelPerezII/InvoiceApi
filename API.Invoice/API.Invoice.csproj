@@ -346,8 +346,10 @@
     <Compile Include="Config\GlobalConfig.cs" />
     <Compile Include="Controllers\AuthorizeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InvoiceFileController.cs" />
     <Compile Include="Controllers\InvoiceItemController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
+    <Compile Include="Controllers\InvoiceLogController.cs" />
     <Compile Include="DB\authorizedapp.cs">
       <DependentUpon>ZubairDB.tt</DependentUpon>
     </Compile>
@@ -420,7 +422,9 @@
     <Compile Include="Models\TokenDto.cs" />
     <Compile Include="Profile\AuthorizedAppProfile.cs" />
     <Compile Include="Profile\AutomapperConfig.cs" />
+    <Compile Include="Profile\InvoiceFileProfile.cs" />
     <Compile Include="Profile\InvoiceItemProfile.cs" />
+    <Compile Include="Profile\InvoiceLogProfile.cs" />
     <Compile Include="Profile\InvoiceProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\AuthorizedAppProvider.cs" />
